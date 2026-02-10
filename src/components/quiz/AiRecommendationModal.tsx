@@ -6,7 +6,6 @@ import {
   Spinner,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import ReactMarkdown from "react-markdown";
 
 type Props = {
   resilienceLevel: string;
@@ -54,7 +53,9 @@ export default function AIRecommendationModal({
     }
   };
 
-  const downloadPDF = async () => {
+  const downloadPDF = async (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
     setDownloading(true);
 
     try {
@@ -97,8 +98,7 @@ export default function AIRecommendationModal({
   return (
     <Dialog
       open={open}
-      handler={() => null}
-      dismiss={false}
+      handler={handleClose}
       size="xl"
       className="!bg-black/40 backdrop-blur-sm"
     >
@@ -113,7 +113,7 @@ export default function AIRecommendationModal({
           </Typography>
         </div>
 
-        {/* Content */}
+        {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto px-10 py-8 bg-gray-50">
           {loading && (
             <div className="flex flex-col items-center justify-center py-20">
@@ -134,24 +134,31 @@ export default function AIRecommendationModal({
 
           {!loading && !error && (
             <div className="bg-white rounded-2xl shadow-lg p-8 border border-blue-100">
-              <Typography className="font-bold text-blue-700 mb-4">
-                Resilience Level: {resilienceLevel}
-              </Typography>
-              <div className="prose prose-lg prose-blue max-w-none">
+              <div className="mb-4">
+                <Typography className="text-sm text-gray-500">
+                  Resilience Level
+                </Typography>
+                <Typography variant="h6" className="font-bold text-blue-700">
+                  {resilienceLevel}
+                </Typography>
+              </div>
+
+              <div className="prose prose-lg max-w-none whitespace-pre-line leading-relaxed text-gray-800">
                 {recommendation}
               </div>
             </div>
           )}
         </div>
 
+        {/* Footer */}
         <div className="px-10 py-5 bg-white border-t flex justify-between items-center">
-          <Button
+          {/* <Button
             color="green"
             onClick={downloadPDF}
-            disabled={loading || downloading}
+            disabled={loading || !!error || downloading}
           >
             {downloading ? "Preparing PDF..." : "Download PDF"}
-          </Button>
+          </Button> */}
 
           <Button variant="outlined" onClick={handleClose}>
             Close

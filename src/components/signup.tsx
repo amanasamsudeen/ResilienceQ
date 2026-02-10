@@ -49,7 +49,7 @@ export function SignUp() {
 
       setSuccess("Registration successful! Redirecting to login...");
       setTimeout(() => {
-        window.location.href = "/ResilienceIQ/login";
+        window.location.href = "/ResilienceQ/login";
       }, 1500);
     } catch {
       setError("Server not reachable");
@@ -69,7 +69,7 @@ export function SignUp() {
               variant="h3"
               className="mb-2 font-semibold text-blue-gray-900"
             >
-              Create your <span className="text-indigo-600">ResilienceIQ</span>{" "}
+              Create your <span className="text-indigo-600">ResilienceQ</span>{" "}
               account
             </Typography>
 
@@ -141,7 +141,7 @@ export function SignUp() {
               <Typography className="pt-4 text-center text-sm text-blue-gray-700">
                 Already have an account?
                 <a
-                  href="/ResilienceIQ/login"
+                  href="/ResilienceQ/login"
                   className="ml-1 font-medium text-indigo-600 hover:underline"
                 >
                   Log in

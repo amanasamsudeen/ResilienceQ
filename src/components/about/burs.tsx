@@ -62,7 +62,7 @@ export function FeatureSectionThree() {
             </div>
             {/* Download PDF Button */}
             <a
-              href="/ResilienceIQ/BURS-2014.pdf"
+              href="/ResilienceQ/BURS-2014.pdf"
               download
               className="inline-block"
             >

@@ -45,7 +45,7 @@ export function SignIn() {
 
       setSuccess("Login successful!");
       setTimeout(() => {
-        window.location.href = "/ResilienceIQ/#";
+        window.location.href = "/ResilienceQ/#";
       }, 1500);
     } catch {
       setError("Server not reachable");

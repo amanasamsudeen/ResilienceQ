@@ -17,7 +17,7 @@ export default function InstructionModal({ open, onStart }: Props) {
       <DialogBody className="p-8 space-y-6">
         {/* Title */}
         <Typography variant="h3" className="text-center font-bold">
-          Welcome to <span className="text-blue-500">ResilienceIQ</span>
+          Welcome to <span className="text-blue-500">ResilienceQ</span>
         </Typography>
 
         {/* Intro */}
