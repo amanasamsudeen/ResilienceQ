@@ -12,5 +12,5 @@ export default defineConfig({
   integrations: [react(), tailwind()],
 
   site: "https://amanasamsudeen.github.io",
-  base: "/ResilienceQ/",
+  base: "/ResilienceQ-FE/",
 });
