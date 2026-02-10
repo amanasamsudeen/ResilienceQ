@@ -1,2 +1,374 @@
-import{j as e,r as s}from"./index.BaM2DRbY.js";import{r as g}from"./index.L0DL-mCJ.js";import{C as w}from"./navbar.gBg4HIhq.js";import"./ChevronDownIcon.C8jrSNHL.js";function N({open:n,onStart:r}){return e.jsx(s.Dialog,{open:n,handler:()=>{},size:"lg",children:e.jsxs(s.DialogBody,{className:"p-8 space-y-6",children:[e.jsxs(s.Typography,{variant:"h3",className:"text-center font-bold",children:["Welcome to ",e.jsx("span",{className:"text-blue-500",children:"ResilienceIQ"})]}),e.jsxs(s.Card,{className:"p-4",children:[e.jsx(s.Typography,{variant:"h6",className:"mb-2",children:"📝 How to Complete the Assessment"}),e.jsxs("ul",{className:"space-y-1 text-sm text-gray-700",children:[e.jsx("li",{children:"• Read each statement carefully."}),e.jsx("li",{children:"• Select the option that best describes you."}),e.jsx("li",{children:"• Answer honestly — there are no right or wrong answers."}),e.jsx("li",{children:"• Respond based on your typical feelings and behaviors."}),e.jsx("li",{children:"• Gain insights into your resilience patterns."})]})]}),e.jsx(s.Typography,{variant:"h5",className:"mt-4 font-bold text-center",children:"Resilience Score Classification"}),e.jsxs("div",{className:"grid grid-cols-1 md:grid-cols-2 gap-4",children:[e.jsx(s.Card,{className:"p-4 border-l-4 border-red-500",children:e.jsx(s.Typography,{variant:"h6",children:"30 – 60 : Low Resilience"})}),e.jsx(s.Card,{className:"p-4 border-l-4 border-orange-500",children:e.jsx(s.Typography,{variant:"h6",children:"61 – 90 : Below Average Resilience"})}),e.jsx(s.Card,{className:"p-4 border-l-4 border-yellow-500",children:e.jsx(s.Typography,{variant:"h6",children:"91 – 120 : Moderate Resilience"})}),e.jsx(s.Card,{className:"p-4 border-l-4 border-green-500",children:e.jsx(s.Typography,{variant:"h6",children:"121 – 150 : High Resilience"})})]}),e.jsx(s.Typography,{variant:"small",color:"gray",className:"text-center italic",children:"This assessment is intended for educational and self-awareness purposes only and does not replace professional psychological evaluation or treatment."}),e.jsx("div",{className:"flex justify-center mt-6",children:e.jsx(s.Button,{color:"blue",size:"lg",onClick:r,children:"Start Resilience Assessment"})})]})})}const I=["Not at all appropriate","Marginally appropriate","Moderately appropriate","Appropriate to a large extent","Most appropriate"];function R({value:n,onChange:r}){return e.jsx("div",{className:"grid grid-cols-5 gap-4 mt-4",children:I.map((a,c)=>{const t=c+1,i=n===t;return e.jsxs("label",{className:`cursor-pointer rounded-xl border p-4 text-center transition-all
-              ${i?"border-blue-500 bg-blue-50":"border-gray-300 hover:border-blue-400"}`,children:[e.jsx("input",{type:"radio",name:"likert",className:"hidden",checked:i,onChange:()=>r(t)}),e.jsx("div",{className:`text-lg font-semibold ${i?"text-blue-600":"text-gray-700"}`,children:t}),e.jsx("div",{className:"text-xs text-gray-600 mt-2 leading-snug",children:a})]},t)})})}function T({current:n,total:r}){const a=Math.round(n/r*100);return e.jsxs("div",{className:"mb-6",children:[e.jsxs("div",{className:"flex justify-between text-sm mb-1",children:[e.jsxs("span",{children:["Question ",n," of ",r]}),e.jsxs("span",{children:[a,"%"]})]}),e.jsx("div",{className:"h-2 bg-gray-200 rounded",children:e.jsx("div",{className:"h-2 bg-blue-500 rounded transition-all",style:{width:`${a}%`}})})]})}function k({answers:n,onClose:r}){const a=n.reduce((h,l)=>h+(l??0),0),c=150;let t="",i="";a<=60?(t="Low Resilience",i="bg-red-500"):a<=90?(t="Below Average Resilience",i="bg-orange-500"):a<=120?(t="Average / Moderate Resilience",i="bg-yellow-500"):(t="High Resilience",i="bg-green-500");const x=Math.min(a/c*100,100);return e.jsx(s.Dialog,{open:!0,handler:r,size:"sm",children:e.jsxs(s.DialogBody,{className:"p-8",children:[e.jsx(s.Typography,{variant:"h4",className:"mb-2 text-center font-bold",children:"Resilience Assessment Result"}),e.jsx(s.Typography,{className:"text-center text-gray-600 mb-6",children:"Bharathiar University Resilience Scale (BURS)"}),e.jsxs("div",{className:"text-center mb-6",children:[e.jsx(s.Typography,{className:"text-sm text-gray-500",children:"Total Score"}),e.jsx(s.Typography,{variant:"h2",className:"font-extrabold",children:a}),e.jsxs(s.Typography,{className:"text-sm text-gray-600",children:["out of ",c]})]}),e.jsxs("div",{className:"mb-4",children:[e.jsx("div",{className:"w-full h-4 rounded-full bg-gray-200 overflow-hidden",children:e.jsx("div",{className:`h-full ${i} transition-all`,style:{width:`${x}%`}})}),e.jsxs("div",{className:"flex justify-between text-xs text-gray-500 mt-2",children:[e.jsx("span",{children:"0"}),e.jsx("span",{children:"60"}),e.jsx("span",{children:"90"}),e.jsx("span",{children:"120"}),e.jsx("span",{children:"150"})]})]}),e.jsxs("div",{className:"text-center mb-6",children:[e.jsx(s.Typography,{className:"text-sm text-gray-500",children:"Resilience Level"}),e.jsx(s.Typography,{variant:"h6",className:"font-semibold mt-1",children:t})]}),e.jsx("div",{className:"flex justify-center",children:e.jsx(s.Button,{color:"blue",onClick:r,children:"View Recommendations"})})]})})}const f=5,d=["I can remain balanced in my emotion irrespective of whether I succeed or fail.","I can easily revise my plans without accepting defeat when I get stuck up.","I usually get back to my cheerful self pretty soon no matter what failures occur in my life.","When the situation is very demanding I can pull up myself and handle all of it efficiently.","I do not waste my time on lamenting over the past however bad it might have been.","During times of trouble I sink with feeling helpless.","I easily breakdown at the crisis and it takes longer time for me recover myself.","People say that I have a strong heart which can withstand any disappointment.","I can recover from bad mood quickly and easily after facing any sad event.","I suffocate a lot when facing problems","When in trouble I get impatient and am impulsive.","Challenges are not problems but are opportunities for rising to the occasion.","My efficiency significantly drops down at difficult times.","When I fight, I fight only to have the gusto feelings it gives me, no matter whether I am going to win or lose.","When I am in a difficult situation, I can usually find my out of it.","I don’t venture on any project where I had failed earlier.","I cannot recover from frustration for long time.","Life will be barren if there were no problem at all.","I stay cool even when things don’t go the way I expect.","I can handle any critical situation with confidence since I have successfully done so earlier","Nothing can stop me from proceeding on any task once I begin my work","Even a severe set back can only make me to bend down but never to break down.","If am defeated in anything the first thing that comes to my mind is how to bounce out of it","I usually get so confused about which way to move when I face problems.","Problems do not ditch me out of my sources but enrich me with finding new resources.","Whether the disappointment is small or big I feel miserable about it.","The greater the problem I confront with the greater will be my efforts to solve them.","I feel so weak to begin any venture as I have experienced a large number of frustrations in life.","Past failures can not deter me from taking up any project I want to take.","Failures and frustrations can never deter me from my efforts for long."];function M(){const[n,r]=g.useState(!0),[a,c]=g.useState(0),[t,i]=g.useState(Array(d.length).fill(null)),[x,h]=g.useState(!1),l=a*f,m=l+f,y=d.slice(l,m),b=(p,o)=>{const u=[...t];u[l+p]=o,i(u)},j=y.every((p,o)=>t[l+o]!==null),v=()=>{m<d.length?c(a+1):h(!0)};return e.jsxs(e.Fragment,{children:[e.jsx(w,{}),e.jsx(N,{open:n,onStart:()=>r(!1)}),!n&&e.jsxs(s.Card,{className:"max-w-5xl mx-auto p-8 shadow-xl rounded-2xl",children:[e.jsx(s.Typography,{variant:"h4",className:"mb-1 font-bold",children:"Bharathiar University Resilience Scale"}),e.jsx(s.Typography,{color:"gray",className:"mb-6 text-sm",children:"Please read each statement carefully and select the option that best describes you."}),e.jsx(T,{current:Math.min(m,d.length),total:d.length}),e.jsx("div",{className:"space-y-6",children:y.map((p,o)=>e.jsxs(s.Card,{className:"p-5 border border-gray-200 shadow-sm",children:[e.jsxs(s.Typography,{variant:"h6",className:"mb-3",children:[l+o+1,". ",p]}),e.jsx(R,{value:t[l+o],onChange:u=>b(o,u)})]},o))}),e.jsx("div",{className:"flex justify-end mt-8",children:e.jsx(s.Button,{color:"blue",disabled:!j,onClick:v,children:m>=d.length?"Submit Assessment":"Next"})})]}),x&&e.jsx(k,{answers:t,onClose:()=>h(!1)})]})}export{M as default};
+import { j as e, r as s } from "./index.BaM2DRbY.js";
+import { r as g } from "./index.L0DL-mCJ.js";
+import { C as w } from "./navbar.gBg4HIhq.js";
+import "./ChevronDownIcon.C8jrSNHL.js";
+function N({ open: n, onStart: r }) {
+  return e.jsx(s.Dialog, {
+    open: n,
+    handler: () => {},
+    size: "lg",
+    children: e.jsxs(s.DialogBody, {
+      className: "p-8 space-y-6",
+      children: [
+        e.jsxs(s.Typography, {
+          variant: "h3",
+          className: "text-center font-bold",
+          children: [
+            "Welcome to ",
+            e.jsx("span", {
+              className: "text-blue-500",
+              children: "ResilienceQ",
+            }),
+          ],
+        }),
+        e.jsxs(s.Card, {
+          className: "p-4",
+          children: [
+            e.jsx(s.Typography, {
+              variant: "h6",
+              className: "mb-2",
+              children: "📝 How to Complete the Assessment",
+            }),
+            e.jsxs("ul", {
+              className: "space-y-1 text-sm text-gray-700",
+              children: [
+                e.jsx("li", { children: "• Read each statement carefully." }),
+                e.jsx("li", {
+                  children: "• Select the option that best describes you.",
+                }),
+                e.jsx("li", {
+                  children:
+                    "• Answer honestly — there are no right or wrong answers.",
+                }),
+                e.jsx("li", {
+                  children:
+                    "• Respond based on your typical feelings and behaviors.",
+                }),
+                e.jsx("li", {
+                  children: "• Gain insights into your resilience patterns.",
+                }),
+              ],
+            }),
+          ],
+        }),
+        e.jsx(s.Typography, {
+          variant: "h5",
+          className: "mt-4 font-bold text-center",
+          children: "Resilience Score Classification",
+        }),
+        e.jsxs("div", {
+          className: "grid grid-cols-1 md:grid-cols-2 gap-4",
+          children: [
+            e.jsx(s.Card, {
+              className: "p-4 border-l-4 border-red-500",
+              children: e.jsx(s.Typography, {
+                variant: "h6",
+                children: "30 – 60 : Low Resilience",
+              }),
+            }),
+            e.jsx(s.Card, {
+              className: "p-4 border-l-4 border-orange-500",
+              children: e.jsx(s.Typography, {
+                variant: "h6",
+                children: "61 – 90 : Below Average Resilience",
+              }),
+            }),
+            e.jsx(s.Card, {
+              className: "p-4 border-l-4 border-yellow-500",
+              children: e.jsx(s.Typography, {
+                variant: "h6",
+                children: "91 – 120 : Moderate Resilience",
+              }),
+            }),
+            e.jsx(s.Card, {
+              className: "p-4 border-l-4 border-green-500",
+              children: e.jsx(s.Typography, {
+                variant: "h6",
+                children: "121 – 150 : High Resilience",
+              }),
+            }),
+          ],
+        }),
+        e.jsx(s.Typography, {
+          variant: "small",
+          color: "gray",
+          className: "text-center italic",
+          children:
+            "This assessment is intended for educational and self-awareness purposes only and does not replace professional psychological evaluation or treatment.",
+        }),
+        e.jsx("div", {
+          className: "flex justify-center mt-6",
+          children: e.jsx(s.Button, {
+            color: "blue",
+            size: "lg",
+            onClick: r,
+            children: "Start Resilience Assessment",
+          }),
+        }),
+      ],
+    }),
+  });
+}
+const I = [
+  "Not at all appropriate",
+  "Marginally appropriate",
+  "Moderately appropriate",
+  "Appropriate to a large extent",
+  "Most appropriate",
+];
+function R({ value: n, onChange: r }) {
+  return e.jsx("div", {
+    className: "grid grid-cols-5 gap-4 mt-4",
+    children: I.map((a, c) => {
+      const t = c + 1,
+        i = n === t;
+      return e.jsxs(
+        "label",
+        {
+          className: `cursor-pointer rounded-xl border p-4 text-center transition-all
+              ${i ? "border-blue-500 bg-blue-50" : "border-gray-300 hover:border-blue-400"}`,
+          children: [
+            e.jsx("input", {
+              type: "radio",
+              name: "likert",
+              className: "hidden",
+              checked: i,
+              onChange: () => r(t),
+            }),
+            e.jsx("div", {
+              className: `text-lg font-semibold ${i ? "text-blue-600" : "text-gray-700"}`,
+              children: t,
+            }),
+            e.jsx("div", {
+              className: "text-xs text-gray-600 mt-2 leading-snug",
+              children: a,
+            }),
+          ],
+        },
+        t,
+      );
+    }),
+  });
+}
+function T({ current: n, total: r }) {
+  const a = Math.round((n / r) * 100);
+  return e.jsxs("div", {
+    className: "mb-6",
+    children: [
+      e.jsxs("div", {
+        className: "flex justify-between text-sm mb-1",
+        children: [
+          e.jsxs("span", { children: ["Question ", n, " of ", r] }),
+          e.jsxs("span", { children: [a, "%"] }),
+        ],
+      }),
+      e.jsx("div", {
+        className: "h-2 bg-gray-200 rounded",
+        children: e.jsx("div", {
+          className: "h-2 bg-blue-500 rounded transition-all",
+          style: { width: `${a}%` },
+        }),
+      }),
+    ],
+  });
+}
+function k({ answers: n, onClose: r }) {
+  const a = n.reduce((h, l) => h + (l ?? 0), 0),
+    c = 150;
+  let t = "",
+    i = "";
+  a <= 60
+    ? ((t = "Low Resilience"), (i = "bg-red-500"))
+    : a <= 90
+      ? ((t = "Below Average Resilience"), (i = "bg-orange-500"))
+      : a <= 120
+        ? ((t = "Average / Moderate Resilience"), (i = "bg-yellow-500"))
+        : ((t = "High Resilience"), (i = "bg-green-500"));
+  const x = Math.min((a / c) * 100, 100);
+  return e.jsx(s.Dialog, {
+    open: !0,
+    handler: r,
+    size: "sm",
+    children: e.jsxs(s.DialogBody, {
+      className: "p-8",
+      children: [
+        e.jsx(s.Typography, {
+          variant: "h4",
+          className: "mb-2 text-center font-bold",
+          children: "Resilience Assessment Result",
+        }),
+        e.jsx(s.Typography, {
+          className: "text-center text-gray-600 mb-6",
+          children: "Bharathiar University Resilience Scale (BURS)",
+        }),
+        e.jsxs("div", {
+          className: "text-center mb-6",
+          children: [
+            e.jsx(s.Typography, {
+              className: "text-sm text-gray-500",
+              children: "Total Score",
+            }),
+            e.jsx(s.Typography, {
+              variant: "h2",
+              className: "font-extrabold",
+              children: a,
+            }),
+            e.jsxs(s.Typography, {
+              className: "text-sm text-gray-600",
+              children: ["out of ", c],
+            }),
+          ],
+        }),
+        e.jsxs("div", {
+          className: "mb-4",
+          children: [
+            e.jsx("div", {
+              className: "w-full h-4 rounded-full bg-gray-200 overflow-hidden",
+              children: e.jsx("div", {
+                className: `h-full ${i} transition-all`,
+                style: { width: `${x}%` },
+              }),
+            }),
+            e.jsxs("div", {
+              className: "flex justify-between text-xs text-gray-500 mt-2",
+              children: [
+                e.jsx("span", { children: "0" }),
+                e.jsx("span", { children: "60" }),
+                e.jsx("span", { children: "90" }),
+                e.jsx("span", { children: "120" }),
+                e.jsx("span", { children: "150" }),
+              ],
+            }),
+          ],
+        }),
+        e.jsxs("div", {
+          className: "text-center mb-6",
+          children: [
+            e.jsx(s.Typography, {
+              className: "text-sm text-gray-500",
+              children: "Resilience Level",
+            }),
+            e.jsx(s.Typography, {
+              variant: "h6",
+              className: "font-semibold mt-1",
+              children: t,
+            }),
+          ],
+        }),
+        e.jsx("div", {
+          className: "flex justify-center",
+          children: e.jsx(s.Button, {
+            color: "blue",
+            onClick: r,
+            children: "View Recommendations",
+          }),
+        }),
+      ],
+    }),
+  });
+}
+const f = 5,
+  d = [
+    "I can remain balanced in my emotion irrespective of whether I succeed or fail.",
+    "I can easily revise my plans without accepting defeat when I get stuck up.",
+    "I usually get back to my cheerful self pretty soon no matter what failures occur in my life.",
+    "When the situation is very demanding I can pull up myself and handle all of it efficiently.",
+    "I do not waste my time on lamenting over the past however bad it might have been.",
+    "During times of trouble I sink with feeling helpless.",
+    "I easily breakdown at the crisis and it takes longer time for me recover myself.",
+    "People say that I have a strong heart which can withstand any disappointment.",
+    "I can recover from bad mood quickly and easily after facing any sad event.",
+    "I suffocate a lot when facing problems",
+    "When in trouble I get impatient and am impulsive.",
+    "Challenges are not problems but are opportunities for rising to the occasion.",
+    "My efficiency significantly drops down at difficult times.",
+    "When I fight, I fight only to have the gusto feelings it gives me, no matter whether I am going to win or lose.",
+    "When I am in a difficult situation, I can usually find my out of it.",
+    "I don’t venture on any project where I had failed earlier.",
+    "I cannot recover from frustration for long time.",
+    "Life will be barren if there were no problem at all.",
+    "I stay cool even when things don’t go the way I expect.",
+    "I can handle any critical situation with confidence since I have successfully done so earlier",
+    "Nothing can stop me from proceeding on any task once I begin my work",
+    "Even a severe set back can only make me to bend down but never to break down.",
+    "If am defeated in anything the first thing that comes to my mind is how to bounce out of it",
+    "I usually get so confused about which way to move when I face problems.",
+    "Problems do not ditch me out of my sources but enrich me with finding new resources.",
+    "Whether the disappointment is small or big I feel miserable about it.",
+    "The greater the problem I confront with the greater will be my efforts to solve them.",
+    "I feel so weak to begin any venture as I have experienced a large number of frustrations in life.",
+    "Past failures can not deter me from taking up any project I want to take.",
+    "Failures and frustrations can never deter me from my efforts for long.",
+  ];
+function M() {
+  const [n, r] = g.useState(!0),
+    [a, c] = g.useState(0),
+    [t, i] = g.useState(Array(d.length).fill(null)),
+    [x, h] = g.useState(!1),
+    l = a * f,
+    m = l + f,
+    y = d.slice(l, m),
+    b = (p, o) => {
+      const u = [...t];
+      ((u[l + p] = o), i(u));
+    },
+    j = y.every((p, o) => t[l + o] !== null),
+    v = () => {
+      m < d.length ? c(a + 1) : h(!0);
+    };
+  return e.jsxs(e.Fragment, {
+    children: [
+      e.jsx(w, {}),
+      e.jsx(N, { open: n, onStart: () => r(!1) }),
+      !n &&
+        e.jsxs(s.Card, {
+          className: "max-w-5xl mx-auto p-8 shadow-xl rounded-2xl",
+          children: [
+            e.jsx(s.Typography, {
+              variant: "h4",
+              className: "mb-1 font-bold",
+              children: "Bharathiar University Resilience Scale",
+            }),
+            e.jsx(s.Typography, {
+              color: "gray",
+              className: "mb-6 text-sm",
+              children:
+                "Please read each statement carefully and select the option that best describes you.",
+            }),
+            e.jsx(T, { current: Math.min(m, d.length), total: d.length }),
+            e.jsx("div", {
+              className: "space-y-6",
+              children: y.map((p, o) =>
+                e.jsxs(
+                  s.Card,
+                  {
+                    className: "p-5 border border-gray-200 shadow-sm",
+                    children: [
+                      e.jsxs(s.Typography, {
+                        variant: "h6",
+                        className: "mb-3",
+                        children: [l + o + 1, ". ", p],
+                      }),
+                      e.jsx(R, { value: t[l + o], onChange: (u) => b(o, u) }),
+                    ],
+                  },
+                  o,
+                ),
+              ),
+            }),
+            e.jsx("div", {
+              className: "flex justify-end mt-8",
+              children: e.jsx(s.Button, {
+                color: "blue",
+                disabled: !j,
+                onClick: v,
+                children: m >= d.length ? "Submit Assessment" : "Next",
+              }),
+            }),
+          ],
+        }),
+      x && e.jsx(k, { answers: t, onClose: () => h(!1) }),
+    ],
+  });
+}
+export { M as default };

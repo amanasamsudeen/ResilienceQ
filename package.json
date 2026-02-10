@@ -62,10 +62,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/amanasamsudeen/ResilienceIQ.git"
+    "url": "https://github.com/amanasamsudeen/ResilienceQ-FE.git"
   },
   "bugs": {
     "url": "https://github.com/creativetimofficial/astro-launch-ui/issues"
   },
-  "homepage": "https://amanasamsudeen.github.io/ResilienceIQ/"
+  "homepage": "https://amanasamsudeen.github.io/ResilienceQ-FE/"
 }

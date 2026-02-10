@@ -1,1 +1,152 @@
-import{j as e,r as s}from"./index.BaM2DRbY.js";import"./index.L0DL-mCJ.js";import{T as d}from"./theme-provider.DE2wROqN.js";import{C as m}from"./navbar.gBg4HIhq.js";import"./ChevronDownIcon.C8jrSNHL.js";function g({img:a,title:l,desc:o,author:n,date:i,url:r,tags:c}){return e.jsxs(s.Card,{shadow:!1,className:"group rounded-2xl border border-blue-gray-100 bg-white/80 backdrop-blur transition-all hover:-translate-y-2 hover:shadow-xl",children:[e.jsx(s.CardHeader,{floated:!1,className:"mx-0 mt-0 mb-6 h-56 rounded-xl",children:e.jsx("a",{href:r,children:e.jsx("img",{src:a,alt:l,className:"h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"})})}),e.jsxs(s.CardBody,{className:"p-6 pt-0",children:[e.jsxs(s.Typography,{className:"mb-2 text-sm font-medium text-blue-600",children:[n," · ",i]}),e.jsx(s.Typography,{variant:"h5",color:"blue-gray",className:"mb-3 font-semibold leading-snug",children:l}),e.jsx(s.Typography,{color:"gray",className:"mb-4 text-sm",children:o}),e.jsx("div",{className:"mb-5 flex flex-wrap gap-2",children:c.map(t=>e.jsx(s.Chip,{value:t,size:"sm",className:"bg-blue-50 text-blue-700"},t))}),e.jsx("a",{href:r,children:e.jsx(s.Button,{variant:"text",color:"blue",className:"px-0",children:"Read Article →"})})]})]})}const h=[{img:"women1.jpg",title:"Building Psychological Resilience in University Students",desc:"A counsellor’s perspective on how students can develop coping strategies to manage academic stress and uncertainty.",author:"Dr. Anjali Perera, Counselling Psychologist",date:"Jan 2026",tags:["Students","Resilience","Academic Stress"],url:"#"},{img:"landing.jpg",title:"Healthy Coping Mechanisms for Everyday Stress",desc:"Learn evidence-based coping techniques recommended by mental health professionals to handle daily stressors.",author:"Ms. R. Fathima, Mental Health Counsellor",date:"Jan 2026",tags:["Stress","Coping Skills","Well-being"],url:"#"},{img:"head.jpg",title:"Recognizing and Preventing Emotional Burnout",desc:"Early signs of burnout and practical steps to recover emotional balance, explained by a clinical counsellor.",author:"Mr. S. Arun, Clinical Counsellor",date:"Dec 2025",tags:["Burnout","Self-Care","Mental Health"],url:"#"}];function j(){return e.jsxs(d,{children:[e.jsx(m,{}),e.jsx("section",{id:"blogs",className:"bg-gradient-to-b from-white to-blue-50",children:e.jsxs("div",{className:"container mx-auto px-8 py-20",children:[e.jsxs("div",{className:"mb-16 ",children:[e.jsxs(s.Typography,{className:"mb-2 text-lg font-semibold",children:["Welcome to ",e.jsx("span",{className:"text-blue-600",children:"ResilienceIQ"})," ","Blog hub."]}),e.jsxs(s.Typography,{variant:"h2",color:"blue-gray",className:"mb-4 font-extrabold",children:["Recent Articles on"," ",e.jsx("span",{className:"text-blue-600",children:"Resilience & Well-Being"})]}),e.jsx(s.Typography,{color:"blue-gray",children:"Explore expert-written articles focused on psychological resilience, stress management, and emotional well-being."})]}),e.jsx("div",{className:"grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3",children:h.map(a=>e.jsx(g,{...a},a.title))})]})})]})}export{j as default};
+import { j as e, r as s } from "./index.BaM2DRbY.js";
+import "./index.L0DL-mCJ.js";
+import { T as d } from "./theme-provider.DE2wROqN.js";
+import { C as m } from "./navbar.gBg4HIhq.js";
+import "./ChevronDownIcon.C8jrSNHL.js";
+function g({ img: a, title: l, desc: o, author: n, date: i, url: r, tags: c }) {
+  return e.jsxs(s.Card, {
+    shadow: !1,
+    className:
+      "group rounded-2xl border border-blue-gray-100 bg-white/80 backdrop-blur transition-all hover:-translate-y-2 hover:shadow-xl",
+    children: [
+      e.jsx(s.CardHeader, {
+        floated: !1,
+        className: "mx-0 mt-0 mb-6 h-56 rounded-xl",
+        children: e.jsx("a", {
+          href: r,
+          children: e.jsx("img", {
+            src: a,
+            alt: l,
+            className:
+              "h-full w-full object-cover transition-transform duration-300 group-hover:scale-105",
+          }),
+        }),
+      }),
+      e.jsxs(s.CardBody, {
+        className: "p-6 pt-0",
+        children: [
+          e.jsxs(s.Typography, {
+            className: "mb-2 text-sm font-medium text-blue-600",
+            children: [n, " · ", i],
+          }),
+          e.jsx(s.Typography, {
+            variant: "h5",
+            color: "blue-gray",
+            className: "mb-3 font-semibold leading-snug",
+            children: l,
+          }),
+          e.jsx(s.Typography, {
+            color: "gray",
+            className: "mb-4 text-sm",
+            children: o,
+          }),
+          e.jsx("div", {
+            className: "mb-5 flex flex-wrap gap-2",
+            children: c.map((t) =>
+              e.jsx(
+                s.Chip,
+                { value: t, size: "sm", className: "bg-blue-50 text-blue-700" },
+                t,
+              ),
+            ),
+          }),
+          e.jsx("a", {
+            href: r,
+            children: e.jsx(s.Button, {
+              variant: "text",
+              color: "blue",
+              className: "px-0",
+              children: "Read Article →",
+            }),
+          }),
+        ],
+      }),
+    ],
+  });
+}
+const h = [
+  {
+    img: "women1.jpg",
+    title: "Building Psychological Resilience in University Students",
+    desc: "A counsellor’s perspective on how students can develop coping strategies to manage academic stress and uncertainty.",
+    author: "Dr. Anjali Perera, Counselling Psychologist",
+    date: "Jan 2026",
+    tags: ["Students", "Resilience", "Academic Stress"],
+    url: "#",
+  },
+  {
+    img: "landing.jpg",
+    title: "Healthy Coping Mechanisms for Everyday Stress",
+    desc: "Learn evidence-based coping techniques recommended by mental health professionals to handle daily stressors.",
+    author: "Ms. R. Fathima, Mental Health Counsellor",
+    date: "Jan 2026",
+    tags: ["Stress", "Coping Skills", "Well-being"],
+    url: "#",
+  },
+  {
+    img: "head.jpg",
+    title: "Recognizing and Preventing Emotional Burnout",
+    desc: "Early signs of burnout and practical steps to recover emotional balance, explained by a clinical counsellor.",
+    author: "Mr. S. Arun, Clinical Counsellor",
+    date: "Dec 2025",
+    tags: ["Burnout", "Self-Care", "Mental Health"],
+    url: "#",
+  },
+];
+function j() {
+  return e.jsxs(d, {
+    children: [
+      e.jsx(m, {}),
+      e.jsx("section", {
+        id: "blogs",
+        className: "bg-gradient-to-b from-white to-blue-50",
+        children: e.jsxs("div", {
+          className: "container mx-auto px-8 py-20",
+          children: [
+            e.jsxs("div", {
+              className: "mb-16 ",
+              children: [
+                e.jsxs(s.Typography, {
+                  className: "mb-2 text-lg font-semibold",
+                  children: [
+                    "Welcome to ",
+                    e.jsx("span", {
+                      className: "text-blue-600",
+                      children: "ResilienceQ",
+                    }),
+                    " ",
+                    "Blog hub.",
+                  ],
+                }),
+                e.jsxs(s.Typography, {
+                  variant: "h2",
+                  color: "blue-gray",
+                  className: "mb-4 font-extrabold",
+                  children: [
+                    "Recent Articles on",
+                    " ",
+                    e.jsx("span", {
+                      className: "text-blue-600",
+                      children: "Resilience & Well-Being",
+                    }),
+                  ],
+                }),
+                e.jsx(s.Typography, {
+                  color: "blue-gray",
+                  children:
+                    "Explore expert-written articles focused on psychological resilience, stress management, and emotional well-being.",
+                }),
+              ],
+            }),
+            e.jsx("div", {
+              className:
+                "grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3",
+              children: h.map((a) => e.jsx(g, { ...a }, a.title)),
+            }),
+          ],
+        }),
+      }),
+    ],
+  });
+}
+export { j as default };
