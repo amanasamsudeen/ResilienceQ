@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Quiz from "../components/quiz/QuizScalePage"
+
+---
+
+<Layout title="quiz">
+	<main>
+    <Quiz client:only="react" />
+  </main>
+</Layout>

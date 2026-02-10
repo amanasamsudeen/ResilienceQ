@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HeroPresentation from "../components/presentation/header"
+import FeatureLanding from "../components/presentation/feature"
+import DevPresentation from "../components/presentation/developerFree"
+import FigmaPresentation from "../components/presentation/freeToPro"
+import AstroSection from "../components/presentation/astro"
+import BlogSectionThree from "../components/presentation/pagesFree"
+
+import Footer from "../components/presentation/footerFree"
+
+---
+
+<Layout title="ResilienceIQ">
+	<main>
+    <HeroPresentation client:only="react" />
+    <FeatureLanding client:only="react" />
+    <DevPresentation client:only="react" />
+    <FigmaPresentation client:only="react" />
+     <BlogSectionThree client:only="react" />
+    <AstroSection client:only="react" />
+   
+    <Footer client:only="react" />
+  </main>
+</Layout>

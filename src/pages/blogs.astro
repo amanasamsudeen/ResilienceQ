@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Blogs from "../components/blogs"
+
+---
+
+<Layout title="blogs">
+	<main>
+    <Blogs client:only="react" />
+  </main>
+</Layout>

@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import FAQs from "../components/faq/FAQPage"
+
+---
+
+<Layout title="FAQs">
+	<main>
+    <FAQs client:only="react" />
+  </main>
+</Layout>

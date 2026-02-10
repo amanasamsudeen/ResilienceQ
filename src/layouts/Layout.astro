@@ -1,0 +1,80 @@
+---
+export interface Props {
+  metaDescription?: string;
+}
+
+// Keep only metaDescription dynamic if you want
+const {
+  metaDescription = "ResilienceIQ platform"
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/ResilienceIQ/favicon.svg" />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700"
+      rel="stylesheet"
+    />
+
+    <!-- 🔒 Static Page Title -->
+    <title>ResilienceIQ</title>
+
+    <!-- Meta -->
+    <meta name="description" content={metaDescription} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Canonical -->
+    <link
+      rel="canonical"
+      href="https://amanasamsudeen.github.io/ResilienceIQ/"
+    />
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-NKDMSK6");
+    </script>
+  </head>
+
+  <body class="overflow-x-hidden">
+    <noscript>
+      <iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
+        height="0"
+        width="0"
+        style="display:none;visibility:hidden">
+      </iframe>
+    </noscript>
+
+    <slot />
+
+    <!-- FontAwesome -->
+    <script
+      src="https://kit.fontawesome.com/349ee9c857.js"
+      crossOrigin="anonymous"
+    ></script>
+  </body>
+</html>
+
+<style is:global>
+  code {
+    font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
+      DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+  }
+</style>
