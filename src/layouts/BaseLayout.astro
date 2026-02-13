@@ -1,0 +1,14 @@
+---
+const { title = "ResilienceQ" } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{title}</title>
+  </head>
+
+  <body class="relative min-h-screen bg-slate-50 text-slate-900">
+    <slot />
+  </body>
+</html>

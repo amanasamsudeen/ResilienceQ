@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import AiAssistantPanel from "../components/ai/AiAssistantPanel";
+---
+
+<BaseLayout title="FAQs">
+  <main class="p-8">
+    <h1 class="text-2xl font-bold mb-4">FAQs</h1>
+    <p>Frequently asked questions about ResilienceQ.</p>
+  </main>
+
+  <!-- Floating AI Assistant -->
+  <AiAssistantPanel client:load />
+</BaseLayout>

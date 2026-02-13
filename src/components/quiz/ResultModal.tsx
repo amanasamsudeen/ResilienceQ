@@ -110,7 +110,6 @@ export default function ResultModal({ answers, onClose }: Props) {
             >
               Download Excel Report
             </Button>
-
             <Button fullWidth variant="outlined" onClick={onClose}>
               Close
             </Button>
@@ -118,7 +117,6 @@ export default function ResultModal({ answers, onClose }: Props) {
         </DialogBody>
       </Dialog>
 
-      {/* AI Modal */}
       {showAI && (
         <AIRecommendationModal
           resilienceLevel={resilienceLevel}

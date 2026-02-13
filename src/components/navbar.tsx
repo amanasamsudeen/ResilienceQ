@@ -5,10 +5,6 @@ import {
   Typography,
   Button,
   IconButton,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
   Avatar,
 } from "@material-tailwind/react";
 import {
@@ -22,38 +18,46 @@ import {
   PowerIcon,
 } from "@heroicons/react/24/outline";
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 export default function ComplexNavbar() {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [shouldShowBorder, setShouldShowBorder] = useState(false);
-  const [user, setUser] = useState<{ name: string; email: string } | null>(
-    null,
-  );
+  const [user, setUser] = useState<User | null>(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  // Border on scroll
   useEffect(() => {
     const handleScroll = () => setShouldShowBorder(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Close mobile menu on resize
   useEffect(() => {
     const handleResize = () => window.innerWidth >= 960 && setIsNavOpen(false);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Load user from localStorage
   useEffect(() => {
-    const loggedUser = localStorage.getItem("user");
-    if (loggedUser) setUser(JSON.parse(loggedUser));
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    window.location.href = "/ResilienceQ/"; // redirect home
+    window.location.href = "/ResilienceQ/";
   };
 
-  // Absolute links to work correctly in GitHub Pages
   const navLinks = [
     { label: "Home", href: "/ResilienceQ/#", icon: HomeIcon },
     {
@@ -97,48 +101,53 @@ export default function ComplexNavbar() {
             </li>
           ))}
 
+          {/* USER SECTION */}
           {user ? (
-            <Menu
-              open={isMenuOpen}
-              handler={setIsMenuOpen}
-              placement="bottom-end"
-            >
-              <MenuHandler>
-                <Button
-                  variant="text"
-                  color="blue-gray"
-                  className="flex items-center gap-2 rounded-full py-1 px-3"
-                >
-                  <Avatar
-                    variant="circular"
-                    size="sm"
-                    alt={user.name}
-                    className="border border-gray-300 p-0.5"
-                    src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
-                  />
-                  <span>{user.name.split(" ")[0]}</span>
-                  <ChevronDownIcon
-                    className={`h-4 w-4 transition-transform ${isMenuOpen ? "rotate-180" : ""}`}
-                  />
-                </Button>
-              </MenuHandler>
-              <MenuList>
-                <MenuItem
-                  onClick={() =>
-                    (window.location.href = "/ResilienceQ/profile")
-                  }
-                >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  onClick={handleLogout}
-                  className="flex items-center gap-2 text-red-500"
-                >
-                  <PowerIcon className="h-4 w-4" />
-                  Logout
-                </MenuItem>
-              </MenuList>
-            </Menu>
+            <div className="relative">
+              <Button
+                variant="text"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="flex items-center gap-2 rounded-full"
+              >
+                <Avatar
+                  variant="circular"
+                  size="sm"
+                  alt={user.name}
+                  className="border border-gray-300 p-0.5"
+                  src={`https://ui-avatars.com/api/?name=${user.name}&background=random`}
+                />
+                <span>{user.name.split(" ")[0]}</span>
+                <ChevronDownIcon
+                  className={`h-4 w-4 transition-transform ${
+                    isMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </Button>
+
+              {isMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white shadow-xl border rounded-lg p-4 z-50">
+                  <p className="font-semibold text-gray-800">{user.name}</p>
+                  <p className="text-xs text-gray-500 mb-3">{user.email}</p>
+
+                  <button
+                    onClick={() =>
+                      (window.location.href = "/ResilienceQ/profile")
+                    }
+                    className="block w-full text-left mb-2 text-gray-700"
+                  >
+                    Profile
+                  </button>
+
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-red-500 hover:text-red-700"
+                  >
+                    <PowerIcon className="h-4 w-4" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           ) : (
             <li>
               <Typography
@@ -166,7 +175,7 @@ export default function ComplexNavbar() {
           </li>
         </ul>
 
-        {/* Mobile Menu Toggle */}
+        {/* Mobile Toggle */}
         <IconButton
           size="sm"
           variant="text"
@@ -185,7 +194,6 @@ export default function ComplexNavbar() {
               <Typography
                 as="a"
                 href={href}
-                variant="small"
                 className="flex items-center gap-3 font-medium text-blue-gray-800 hover:bg-blue-50 hover:text-blue-600 transition rounded-lg p-3"
               >
                 <Icon className="h-5 w-5" />
@@ -197,18 +205,14 @@ export default function ComplexNavbar() {
           {user ? (
             <>
               <li>
-                <Typography
-                  as="a"
-                  href="/ResilienceQ/profile"
-                  className="flex items-center gap-3 font-medium text-blue-gray-800 hover:bg-blue-50 hover:text-blue-600 transition rounded-lg p-3"
-                >
+                <Typography as="a" href="/ResilienceQ/profile" className="p-3">
                   Profile
                 </Typography>
               </li>
               <li>
                 <Typography
                   onClick={handleLogout}
-                  className="flex items-center gap-2 font-medium text-red-500 hover:text-red-700 transition rounded-lg p-3 cursor-pointer"
+                  className="p-3 text-red-500 cursor-pointer"
                 >
                   Logout
                 </Typography>
@@ -216,24 +220,11 @@ export default function ComplexNavbar() {
             </>
           ) : (
             <li>
-              <Typography
-                as="a"
-                href="/ResilienceQ/login"
-                className="flex items-center gap-3 font-medium text-blue-gray-800 hover:bg-blue-50 hover:text-blue-600 transition rounded-lg p-3"
-              >
-                <ArrowRightOnRectangleIcon className="h-5 w-5" />
+              <Typography as="a" href="/ResilienceQ/login" className="p-3">
                 Login
               </Typography>
             </li>
           )}
-
-          <li>
-            <a href="/ResilienceQ/quiz">
-              <Button color="blue" fullWidth size="sm" className="mt-2">
-                Take Quiz
-              </Button>
-            </a>
-          </li>
         </ul>
       </Collapse>
     </Navbar>

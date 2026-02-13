@@ -17,47 +17,67 @@ export function SignIn() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
 
-  const handlelogin = async (e) => {
+  const handlelogin = async (e: any) => {
     e.preventDefault();
     setError("");
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:8000/auth/login", {
+      // ---------------- LOGIN API ----------------
+      const loginResponse = await fetch("http://localhost:8000/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
 
-      const data = await response.json();
+      const loginData = await loginResponse.json();
 
-      if (!response.ok) {
-        setError(data.detail || "Login failed");
+      if (!loginResponse.ok) {
+        setError(loginData.detail || "Login failed");
         return;
       }
 
+      // Store token
+      localStorage.setItem("token", loginData.access_token);
+
+      // ---------------- FETCH USER PROFILE ----------------
+      const meResponse = await fetch("http://localhost:8000/auth/me", {
+        headers: {
+          Authorization: `Bearer ${loginData.access_token}`,
+        },
+      });
+
+      const userData = await meResponse.json();
+
+      if (!meResponse.ok) {
+        setError("Failed to fetch user profile");
+        return;
+      }
+
+      // Store user data
+      localStorage.setItem("user", JSON.stringify(userData));
+
       setSuccess("Login successful!");
+
       setTimeout(() => {
-        window.location.href = "/ResilienceQ/#";
-      }, 1500);
-    } catch {
+        window.location.href = "/ResilienceQ/";
+      }, 1000);
+    } catch (err) {
+      console.error(err);
       setError("Server not reachable");
     }
   };
 
   return (
     <ThemeProvider>
-      <section
-        className="grid h-screen lg:grid-cols-2 items-center
-                   bg-gradient-to-br from-blue-50 via-white to-indigo-50"
-      >
+      <section className="grid h-screen lg:grid-cols-2 items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
         {/* LEFT – FORM */}
         <div className="flex items-center justify-center px-8 sm:px-12">
           <div className="w-full max-w-md">
@@ -106,6 +126,7 @@ export function SignIn() {
                   {error}
                 </Typography>
               )}
+
               {success && (
                 <Typography className="mb-3 text-sm text-green-600">
                   {success}
@@ -128,8 +149,7 @@ export function SignIn() {
                 Don&apos;t have an account?
                 <a
                   href="signup"
-                  className="ml-2 inline-flex items-center gap-1
-                             font-medium text-indigo-600 hover:underline"
+                  className="ml-2 inline-flex items-center gap-1 font-medium text-indigo-600 hover:underline"
                 >
                   <UserPlusIcon className="h-4 w-4" />
                   Sign Up
@@ -148,17 +168,9 @@ export function SignIn() {
               className="h-full w-full object-cover scale-105"
             />
 
-            {/* Overlay */}
-            <div
-              className="absolute inset-0 bg-gradient-to-tr
-                         from-indigo-900/60 via-indigo-900/30 to-transparent"
-            />
+            <div className="absolute inset-0 bg-gradient-to-tr from-indigo-900/60 via-indigo-900/30 to-transparent" />
 
-            {/* Caption */}
-            <div
-              className="absolute bottom-6 left-6 right-6
-                         rounded-2xl bg-white/90 backdrop-blur-md p-4 shadow-lg"
-            >
+            <div className="absolute bottom-6 left-6 right-6 rounded-2xl bg-white/90 backdrop-blur-md p-4 shadow-lg">
               <Typography className="text-sm font-medium text-blue-gray-900">
                 Build emotional strength with data-driven insights
               </Typography>

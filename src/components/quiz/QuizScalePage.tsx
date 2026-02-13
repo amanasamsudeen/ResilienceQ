@@ -22,10 +22,12 @@ export default function QuizScalePage() {
 
   const submitAssessment = async () => {
     try {
+      const token = localStorage.getItem("token");
       const response = await fetch("http://127.0.0.1:8000/assessment/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           personalInfo: personalData,
@@ -82,7 +84,23 @@ export default function QuizScalePage() {
       </section>
 
       {showResult && (
-        <ResultModal answers={answers} onClose={() => setShowResult(false)} />
+        <ResultModal
+          answers={answers}
+          onClose={() => {
+            setShowResult(false);
+
+            // Reset everything when closing modal
+            setActiveTab(0);
+            setAnswers(Array(30).fill(null));
+            setPersonalData({
+              fullName: "",
+              gender: "",
+              dob: "",
+              education: "",
+              occupation: "",
+            });
+          }}
+        />
       )}
     </>
   );

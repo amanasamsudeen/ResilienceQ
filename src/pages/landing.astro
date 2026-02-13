@@ -6,6 +6,7 @@ import ContentSection from "../components/landing/content"
 import BasicSection from "../components/landing/starterPack"
 import TestimonialSection from "../components/landing/testimonials"
 import FooterSection from "../components/landing/footer"
+import AiAssistant from "../components/ai/AiAssistantPanel";
 ---
 
 <Layout title="Landing Page">
@@ -15,6 +16,7 @@ import FooterSection from "../components/landing/footer"
     <ContentSection client:only="react" />
     <BasicSection client:only="react" />
     <TestimonialSection client:only="react" />
+       <AiAssistant client:only="react" />
     <FooterSection client:only="react" />
   </main>
 </Layout>

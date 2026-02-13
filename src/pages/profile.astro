@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Profile from "../components/profile/ProfileDashboard";
+
+---
+
+<Layout title="profile">
+	<main>
+    <Profile client:only="react" />
+  </main>
+</Layout>
