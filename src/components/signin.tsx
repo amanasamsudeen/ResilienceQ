@@ -30,8 +30,8 @@ export function SignIn() {
     setSuccess("");
 
     try {
-      // ---------------- LOGIN API ----------------
-      const loginResponse = await fetch("http://localhost:8000/auth/login", {
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const loginResponse = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -48,7 +48,7 @@ export function SignIn() {
       localStorage.setItem("token", loginData.access_token);
 
       // ---------------- FETCH USER PROFILE ----------------
-      const meResponse = await fetch("http://localhost:8000/auth/me", {
+      const meResponse = await fetch(`${API_URL}/auth/me`, {
         headers: {
           Authorization: `Bearer ${loginData.access_token}`,
         },
@@ -67,7 +67,7 @@ export function SignIn() {
       setSuccess("Login successful!");
 
       setTimeout(() => {
-        window.location.href = "/ResilienceQ/";
+        window.location.href = "/";
       }, 1000);
     } catch (err) {
       console.error(err);
