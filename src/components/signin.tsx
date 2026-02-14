@@ -30,7 +30,7 @@ export function SignIn() {
     setSuccess("");
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const API_URL = import.meta.env.PUBLIC_API_URL;
       const loginResponse = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
