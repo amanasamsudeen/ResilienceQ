@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 interface QuizHistory {
   id: number;
@@ -31,7 +30,7 @@ const QuizHistoryTable: React.FC = () => {
       try {
         const token = localStorage.getItem("token");
 
-        const response = await axios.get(
+        const response = await fetch(
           "http://localhost:8000/assessment/history",
           {
             headers: {
@@ -40,7 +39,12 @@ const QuizHistoryTable: React.FC = () => {
           },
         );
 
-        setQuizHistory(response.data);
+        if (!response.ok) {
+          throw new Error("Failed to fetch history");
+        }
+
+        const data = await response.json();
+        setQuizHistory(data);
       } catch (error) {
         console.error("Error fetching quiz history:", error);
       } finally {
