@@ -55,18 +55,18 @@ export default function ComplexNavbar() {
   const handleLogout = () => {
     localStorage.removeItem("user");
     setUser(null);
-    window.location.href = "/ResilienceQ/";
+    window.location.href = "/";
   };
 
   const navLinks = [
-    { label: "Home", href: "/ResilienceQ/#", icon: HomeIcon },
+    { label: "Home", href: "/#", icon: HomeIcon },
     {
       label: "About Us",
-      href: "/ResilienceQ/about",
+      href: "/about",
       icon: InformationCircleIcon,
     },
-    { label: "Blogs", href: "/ResilienceQ/blogs", icon: BookOpenIcon },
-    { label: "FAQs", href: "/ResilienceQ/faq", icon: QuestionMarkCircleIcon },
+    { label: "Blogs", href: "/blogs", icon: BookOpenIcon },
+    { label: "FAQs", href: "/faq", icon: QuestionMarkCircleIcon },
   ];
 
   return (
@@ -79,7 +79,7 @@ export default function ComplexNavbar() {
         {/* Brand */}
         <Typography
           as="a"
-          href="/ResilienceQ/#"
+          href="/#"
           className="mr-4 ml-2 cursor-pointer py-1.5 font-extrabold text-lg tracking-tight text-blue-gray-900"
         >
           Resilience<span className="text-blue-600">Q</span>
@@ -130,9 +130,7 @@ export default function ComplexNavbar() {
                   <p className="text-xs text-gray-500 mb-3">{user.email}</p>
 
                   <button
-                    onClick={() =>
-                      (window.location.href = "/ResilienceQ/profile")
-                    }
+                    onClick={() => (window.location.href = "/profile")}
                     className="block w-full text-left mb-2 text-gray-700"
                   >
                     Profile
@@ -152,7 +150,7 @@ export default function ComplexNavbar() {
             <li>
               <Typography
                 as="a"
-                href="/ResilienceQ/login"
+                href="/login"
                 variant="small"
                 className="flex items-center gap-1.5 font-medium text-blue-gray-800 hover:text-blue-600 transition"
               >
@@ -163,7 +161,7 @@ export default function ComplexNavbar() {
           )}
 
           <li>
-            <a href="/ResilienceQ/quiz">
+            <a href="/quiz">
               <Button
                 color="blue"
                 size="sm"
@@ -205,7 +203,7 @@ export default function ComplexNavbar() {
           {user ? (
             <>
               <li>
-                <Typography as="a" href="/ResilienceQ/profile" className="p-3">
+                <Typography as="a" href="/profile" className="p-3">
                   Profile
                 </Typography>
               </li>
@@ -220,7 +218,7 @@ export default function ComplexNavbar() {
             </>
           ) : (
             <li>
-              <Typography as="a" href="/ResilienceQ/login" className="p-3">
+              <Typography as="a" href="/login" className="p-3">
                 Login
               </Typography>
             </li>

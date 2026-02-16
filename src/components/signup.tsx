@@ -49,7 +49,7 @@ export function SignUp() {
 
       setSuccess("Registration successful! Redirecting to login...");
       setTimeout(() => {
-        window.location.href = "/ResilienceQ/login";
+        window.location.href = "/login";
       }, 1500);
     } catch {
       setError("Server not reachable");
@@ -141,7 +141,7 @@ export function SignUp() {
               <Typography className="pt-4 text-center text-sm text-blue-gray-700">
                 Already have an account?
                 <a
-                  href="/ResilienceQ/login"
+                  href="/login"
                   className="ml-1 font-medium text-indigo-600 hover:underline"
                 >
                   Log in

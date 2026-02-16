@@ -9,9 +9,9 @@ const SOCIAL_MEDIA = [
 ];
 
 const COMPANY = [
-  { name: "About ResilienceQ", link: "/ResilienceQ/about" },
+  { name: "About ResilienceQ", link: "/about" },
   { name: "Our Mission", link: "/mission" },
-  { name: "Research & Publications", link: "/ResilienceQ/blogs" },
+  { name: "Research & Publications", link: "/blogs" },
   { name: "Counsellor Network", link: "/counsellors" },
 ];
 

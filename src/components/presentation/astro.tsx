@@ -57,7 +57,7 @@ export function AstroSection() {
                 <span>Private & confidential results</span>
               </div>
             </div>
-            <a href="/ResilienceQ/quiz">
+            <a href="/quiz">
               <Button
                 size="lg"
                 color="white"
