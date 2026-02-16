@@ -61,11 +61,7 @@ export function FeatureSectionThree() {
               </Typography>
             </div>
             {/* Download PDF Button */}
-            <a
-              href="/ResilienceQ/BURS-2014.pdf"
-              download
-              className="inline-block"
-            >
+            <a href="/BURS-2014.pdf" download className="inline-block">
               <Button size="lg" color="blue" className="shadow-md">
                 Download BURS PDF
               </Button>

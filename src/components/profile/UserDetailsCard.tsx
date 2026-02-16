@@ -30,8 +30,9 @@ export default function UserDetailsCard() {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("token");
+        const API_URL = import.meta.env.PUBLIC_API_URL;
 
-        const res = await fetch("http://localhost:8000/auth/me", {
+        const res = await fetch(`${API_URL}/auth/me`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -62,8 +63,9 @@ export default function UserDetailsCard() {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem("token");
+      const API_URL = import.meta.env.PUBLIC_API_URL;
 
-      const res = await fetch("http://localhost:8000/auth/update", {
+      const res = await fetch(`${API_URL}/auth/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

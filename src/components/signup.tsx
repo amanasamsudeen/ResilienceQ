@@ -20,6 +20,7 @@ export function SignUp() {
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const API_URL = import.meta.env.PUBLIC_API_URL;
 
   const handleChange = (e) => {
     setFormData({
@@ -34,7 +35,7 @@ export function SignUp() {
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:8000/auth/register", {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

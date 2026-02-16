@@ -5,8 +5,8 @@ type Message = {
   sender: "user" | "bot";
   text: string;
 };
-
-const API_URL = "http://localhost:8000/api/chat"; // FastAPI RAG backend
+const API_URL = import.meta.env.PUBLIC_API_URL;
+const API = `${API_URL}/api/chat`; // FastAPI RAG backend
 
 export default function FAQChatbot() {
   const [messages, setMessages] = useState<Message[]>([
@@ -27,7 +27,7 @@ export default function FAQChatbot() {
     setLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch(API, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: input }), // keep this as question

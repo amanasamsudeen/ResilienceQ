@@ -29,15 +29,13 @@ const QuizHistoryTable: React.FC = () => {
     const fetchQuizHistory = async () => {
       try {
         const token = localStorage.getItem("token");
+        const API_URL = import.meta.env.PUBLIC_API_URL;
 
-        const response = await fetch(
-          "http://localhost:8000/assessment/history",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+        const response = await fetch(`${API_URL}/assessment/history`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-        );
+        });
 
         if (!response.ok) {
           throw new Error("Failed to fetch history");

@@ -14,6 +14,7 @@ export default function PersonalInfoTab({
   onNext,
 }) {
   const [errors, setErrors] = useState({});
+  const API_URL = import.meta.env.PUBLIC_API_URL;
 
   const validate = () => {
     const newErrors = {};
@@ -44,7 +45,7 @@ export default function PersonalInfoTab({
     if (!validate()) return;
 
     try {
-      const res = await fetch("http://localhost:8000/api/personal-info/", {
+      const res = await fetch(`${API_URL}/api/personal-info/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

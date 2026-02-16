@@ -1,8 +1,9 @@
 export default function DownloadReportButton() {
   const downloadReport = async () => {
     const token = localStorage.getItem("access_token");
+    const API_URL = import.meta.env.PUBLIC_API_URL;
 
-    const response = await fetch("http://localhost:8000/report/pdf", {
+    const response = await fetch(`${API_URL}/report/pdf`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
