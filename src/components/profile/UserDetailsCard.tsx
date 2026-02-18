@@ -29,7 +29,7 @@ export default function UserDetailsCard() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("access_token");
         const API_URL = import.meta.env.PUBLIC_API_URL;
 
         const res = await fetch(`${API_URL}/auth/me`, {

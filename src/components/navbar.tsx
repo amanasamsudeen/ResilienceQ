@@ -44,7 +44,7 @@ export default function ComplexNavbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Load user from localStorage
+  // Load user
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
@@ -54,17 +54,23 @@ export default function ComplexNavbar() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("access_token");
     setUser(null);
     window.location.href = "/";
   };
 
+  // ✅ Protect Quiz Button
+  const handleQuizClick = () => {
+    if (!user) {
+      window.location.href = "/login?message=login_required";
+      return;
+    }
+    window.location.href = "/quiz";
+  };
+
   const navLinks = [
     { label: "Home", href: "/#", icon: HomeIcon },
-    {
-      label: "About Us",
-      href: "/about",
-      icon: InformationCircleIcon,
-    },
+    { label: "About Us", href: "/about", icon: InformationCircleIcon },
     { label: "Blogs", href: "/blogs", icon: BookOpenIcon },
     { label: "FAQs", href: "/faq", icon: QuestionMarkCircleIcon },
   ];
@@ -131,7 +137,7 @@ export default function ComplexNavbar() {
 
                   <button
                     onClick={() => (window.location.href = "/profile")}
-                    className="block w-full text-left mb-2 text-gray-700"
+                    className="block w-full text-left mb-2 text-gray-700 hover:text-blue-600 transition rounded-lg p-3"
                   >
                     Profile
                   </button>
@@ -160,16 +166,16 @@ export default function ComplexNavbar() {
             </li>
           )}
 
+          {/* ✅ Protected Quiz Button (Desktop) */}
           <li>
-            <a href="/quiz">
-              <Button
-                color="blue"
-                size="sm"
-                className="ml-3 hidden lg:inline-flex shadow-sm"
-              >
-                Take Quiz
-              </Button>
-            </a>
+            <Button
+              onClick={handleQuizClick}
+              color="blue"
+              size="sm"
+              className="ml-3 shadow-sm"
+            >
+              Take Quiz
+            </Button>
           </li>
         </ul>
 
@@ -200,10 +206,26 @@ export default function ComplexNavbar() {
             </li>
           ))}
 
+          {/* ✅ Protected Quiz Button (Mobile Added) */}
+          <li>
+            <Button
+              onClick={handleQuizClick}
+              color="blue"
+              size="sm"
+              className="mx-3 mt-2"
+            >
+              Take Quiz
+            </Button>
+          </li>
+
           {user ? (
             <>
               <li>
-                <Typography as="a" href="/profile" className="p-3">
+                <Typography
+                  as="a"
+                  href="/profile"
+                  className="block w-full text-left  text-gray-700 hover:text-blue-600 transition rounded-lg p-3"
+                >
                   Profile
                 </Typography>
               </li>

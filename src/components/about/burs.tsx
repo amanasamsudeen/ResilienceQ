@@ -46,14 +46,25 @@ export function FeatureSectionThree() {
                 individuals cope with stress, adversity, and challenges.
               </Typography>
 
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 list-disc list-inside text-gray-700">
-                <li>Recovery to normalcy</li>
-                <li>Responses to adversity and risk</li>
-                <li>Perception of past negative experiences</li>
-                <li>Problem definition & problem-solving</li>
-                <li>Openness and flexibility</li>
-                <li>Hope & confidence in coping with future</li>
-              </ul>
+              <div className="mt-6 space-y-3">
+                {[
+                  "Recovery to normalcy",
+                  "Responses to adversity & risk",
+                  "Perception of past negative experiences",
+                  "Problem definition & problem-solving",
+                  "Openness & flexibility",
+                  "Hope & confidence in coping with future",
+                ].map((domain) => (
+                  <div
+                    key={domain}
+                    className="block px-4 py-2 rounded-full text-sm font-medium 
+                 bg-blue-50 text-blue-700 
+                 hover:bg-blue-100 transition duration-300"
+                  >
+                    {domain}
+                  </div>
+                ))}
+              </div>
 
               <Typography className="text-sm text-gray-600">
                 Strong reliability and validity make BURS suitable for research

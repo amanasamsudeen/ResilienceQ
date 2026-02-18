@@ -47,11 +47,11 @@ export function SignUp() {
         setError(data.detail || "Registration failed");
         return;
       }
-
-      setSuccess("Registration successful! Redirecting to login...");
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 1500);
+      alert("Check your email for verification link");
+      // setSuccess("Registration successful! Redirecting to login...");
+      // setTimeout(() => {
+      //   window.location.href = "/login";
+      // }, 1500);
     } catch {
       setError("Server not reachable");
     }

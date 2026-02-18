@@ -1,11 +1,17 @@
 import ThemeProvider from "./theme-provider";
 import { useState } from "react";
-import { Typography, Input, Button } from "@material-tailwind/react";
+import {
+  Typography,
+  Input,
+  Button,
+  IconButton,
+} from "@material-tailwind/react";
 import {
   EnvelopeIcon,
   LockClosedIcon,
   ArrowRightCircleIcon,
   UserPlusIcon,
+  HomeIcon,
 } from "@heroicons/react/24/outline";
 
 export function SignIn() {
@@ -31,6 +37,7 @@ export function SignIn() {
 
     try {
       const API_URL = import.meta.env.PUBLIC_API_URL;
+
       const loginResponse = await fetch(`${API_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -45,9 +52,9 @@ export function SignIn() {
       }
 
       // Store token
-      localStorage.setItem("token", loginData.access_token);
-
-      // ---------------- FETCH USER PROFILE ----------------
+      localStorage.setItem("access_token", loginData.access_token);
+      console.log(loginData.access_token);
+      // Fetch profile
       const meResponse = await fetch(`${API_URL}/auth/me`, {
         headers: {
           Authorization: `Bearer ${loginData.access_token}`,
@@ -61,7 +68,6 @@ export function SignIn() {
         return;
       }
 
-      // Store user data
       localStorage.setItem("user", JSON.stringify(userData));
 
       setSuccess("Login successful!");
@@ -77,7 +83,16 @@ export function SignIn() {
 
   return (
     <ThemeProvider>
-      <section className="grid h-screen lg:grid-cols-2 items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <section className="relative grid h-screen lg:grid-cols-2 items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+        {/* 🔹 HOME BUTTON */}
+        <IconButton
+          variant="text"
+          onClick={() => (window.location.href = "/")}
+          className="absolute top-6 left-6 z-50"
+        >
+          <HomeIcon className="h-6 w-6 text-indigo-600" />
+        </IconButton>
+
         {/* LEFT – FORM */}
         <div className="flex items-center justify-center px-8 sm:px-12">
           <div className="w-full max-w-md">
@@ -108,7 +123,7 @@ export function SignIn() {
               </div>
 
               {/* Password */}
-              <div className="mb-6">
+              <div className="mb-2">
                 <Input
                   size="lg"
                   label="Password"
@@ -118,6 +133,16 @@ export function SignIn() {
                   onChange={handleChange}
                   required
                 />
+              </div>
+
+              {/* 🔹 Forgot Password */}
+              <div className="mb-6 text-right">
+                <a
+                  href="/forgot-password"
+                  className="text-sm text-indigo-600 hover:underline"
+                >
+                  Forgot Password?
+                </a>
               </div>
 
               {/* Messages */}
@@ -138,7 +163,7 @@ export function SignIn() {
                 type="submit"
                 size="lg"
                 fullWidth
-                className="mt-4 flex items-center justify-center gap-2 bg-indigo-600"
+                className="mt-2 flex items-center justify-center gap-2 bg-indigo-600"
               >
                 <ArrowRightCircleIcon className="h-5 w-5" />
                 Sign In
@@ -148,7 +173,7 @@ export function SignIn() {
               <Typography className="mt-6 text-center text-sm text-blue-gray-700">
                 Don&apos;t have an account?
                 <a
-                  href="signup"
+                  href="/signup"
                   className="ml-2 inline-flex items-center gap-1 font-medium text-indigo-600 hover:underline"
                 >
                   <UserPlusIcon className="h-4 w-4" />

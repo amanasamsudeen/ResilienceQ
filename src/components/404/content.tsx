@@ -1,17 +1,18 @@
 import ThemeProvider from "../theme-provider";
-import Navbar from "../defaultNavbar"
+import Navbar from "../defaultNavbar";
 
-import {
-  Button,
-  Typography
-} from "@material-tailwind/react";
+import { Button, Typography } from "@material-tailwind/react";
 
 export function HeroSectionFour() {
   return (
     <ThemeProvider>
-      <Navbar />
       <header className="h-screen min-h-screen w-screen bg-white">
-        <div className="relative h-screen flex align-center flex-col justify-center text-center bg-cover" style={{backgroundImage: `url('https://images.unsplash.com/photo-1650692201357-3b1b15469952?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80')`}}>
+        <div
+          className="relative h-screen flex align-center flex-col justify-center text-center bg-cover"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1650692201357-3b1b15469952?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80')`,
+          }}
+        >
           <span className="absolute top-0 left-0 w-full h-full bg-center bg-cover bg-gradient-to-tl from-gray-900 to-slate-800"></span>
           <Typography
             variant="h1"
