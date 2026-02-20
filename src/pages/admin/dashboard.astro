@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import DashboardOverview from "../../components/admin/dashboardoverview";
+---
+
+<Layout title="Dashboard">
+  <AdminLayout>
+    <DashboardOverview client:load />
+  </AdminLayout>
+</Layout>

@@ -10,23 +10,23 @@ const SOCIAL_MEDIA = [
 
 const COMPANY = [
   { name: "About ResilienceQ", link: "/about" },
-  { name: "Our Mission", link: "/mission" },
-  { name: "Research & Publications", link: "/blogs" },
-  { name: "Counsellor Network", link: "/counsellors" },
+  { name: "Instructions", link: "/quiz" },
+  { name: "Blogs", link: "/blogs" },
+  { name: "Quiz", link: "/quiz" },
 ];
 
 const HELP = [
   { name: "FAQs", link: "/faq" },
   { name: "Contact Support", link: "/contact" },
-  { name: "Ethical Disclaimer", link: "/ethics" },
-  { name: "Crisis Resources", link: "/crisis-support" },
+  { name: "AI assistant", link: "/faq" },
+  { name: "Code of conduct", link: "/crisis-support" },
 ];
 
 const RESOURCES = [
-  { name: "Psychological Scales", link: "/scales" },
-  { name: "Self-Help Resources", link: "/resources" },
+  { name: "BURS", link: "/about" },
+  { name: "About Author", link: "/about" },
   { name: "Blog & Articles", link: "/blog" },
-  { name: "AI Transparency", link: "/ai-transparency" },
+  { name: "AI Transparency", link: "/quiz" },
 ];
 
 export function Footer() {

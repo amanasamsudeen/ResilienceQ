@@ -8,7 +8,7 @@ export function TestimonialSectionTwo() {
           shadow={false}
           className="overflow-hidden rounded-3xl border border-gray-200 bg-gray-50"
         >
-          <CardBody className="flex flex-col-reverse gap-16 py-4 px-14 lg:flex-row">
+          <CardBody className="flex flex-col-reverse gap-16 py-4  lg:flex-row">
             {/* Left Content */}
             <div className="lg:w-2/3">
               <Typography

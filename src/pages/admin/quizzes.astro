@@ -1,0 +1,11 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminQuizAnalytics from "../../components/admin/adminquizAnalytics";
+---
+
+<Layout title="Quizzes">
+  <AdminLayout>
+    <AdminQuizAnalytics client:load />
+  </AdminLayout>
+</Layout>

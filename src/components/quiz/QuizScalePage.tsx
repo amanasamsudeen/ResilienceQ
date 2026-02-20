@@ -19,11 +19,13 @@ export default function QuizScalePage() {
   });
 
   const [answers, setAnswers] = useState(Array(30).fill(null));
+  const API_URL = import.meta.env.PUBLIC_API_URL;
+  const token = localStorage.getItem("access_token");
+  const [excelPath, setExcelPath] = useState<string | null>(null);
 
   const submitAssessment = async () => {
     try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://127.0.0.1:8000/assessment/submit", {
+      const response = await fetch(`${API_URL}/assessment/submit`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,6 +38,7 @@ export default function QuizScalePage() {
       });
 
       const data = await response.json();
+      setExcelPath(data.excel_path);
       setShowResult(true);
     } catch (error) {
       console.error("Submission failed", error);
@@ -86,6 +89,7 @@ export default function QuizScalePage() {
       {showResult && (
         <ResultModal
           answers={answers}
+          excelPath={excelPath}
           onClose={() => {
             setShowResult(false);
 

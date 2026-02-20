@@ -12,8 +12,8 @@ export function HeroSectionTwo() {
   return (
     <ThemeProvider>
       <Navbar />
-      <header className="relative w-screen bg-gradient-to-br from-blue-50 to-white px-8 py-12 overflow-hidden">
-        <div className="container mx-auto grid items-center gap-16 lg:grid-cols-2">
+      <header className="relative w-screen bg-gradient-to-br from-blue-50 to-white px-16 py-12 overflow-hidden">
+        <div className="container mx-auto grid items-center gap-12 lg:grid-cols-2">
           {/* LEFT CONTENT */}
           <div className="text-center lg:text-left relative z-10">
             <div className="mb-8 inline-flex items-center rounded-lg border border-blue-200 bg-white py-1 pl-1 pr-3 shadow-sm">

@@ -18,6 +18,7 @@ export function SignIn() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    role: "",
   });
 
   const [error, setError] = useState("");
@@ -53,7 +54,7 @@ export function SignIn() {
 
       // Store token
       localStorage.setItem("access_token", loginData.access_token);
-      console.log(loginData.access_token);
+      localStorage.setItem("role", loginData.role);
       // Fetch profile
       const meResponse = await fetch(`${API_URL}/auth/me`, {
         headers: {
@@ -73,7 +74,11 @@ export function SignIn() {
       setSuccess("Login successful!");
 
       setTimeout(() => {
-        window.location.href = "/";
+        if (loginData.role === "admin") {
+          window.location.href = "/admin/dashboard";
+        } else {
+          window.location.href = "/";
+        }
       }, 1000);
     } catch (err) {
       console.error(err);

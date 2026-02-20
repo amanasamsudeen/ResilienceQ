@@ -240,7 +240,11 @@ export default function ComplexNavbar() {
             </>
           ) : (
             <li>
-              <Typography as="a" href="/login" className="p-3">
+              <Typography
+                as="a"
+                href="/login"
+                className="text-gray-800  hover:text-blue-600 transition rounded-lg p-3 flex items-center gap-3 font-medium"
+              >
                 Login
               </Typography>
             </li>

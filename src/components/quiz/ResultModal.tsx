@@ -9,10 +9,11 @@ import AIRecommendationModal from "./AiRecommendationModal";
 
 type Props = {
   answers: (number | null)[];
+  excelPath: string;
   onClose: () => void;
 };
 
-export default function ResultModal({ answers, onClose }: Props) {
+export default function ResultModal({ answers, excelPath, onClose }: Props) {
   const [showAI, setShowAI] = useState(false);
 
   const score = answers.reduce((sum, val) => sum + (val ?? 0), 0);
@@ -103,7 +104,7 @@ export default function ResultModal({ answers, onClose }: Props) {
               color="green"
               onClick={() =>
                 window.open(
-                  "http://127.0.0.1:8000/assessment/download",
+                  `http://127.0.0.1:8000/assessment/download/${excelPath}?t=${Date.now()}`,
                   "_blank",
                 )
               }

@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminUsersAnalytics from "../../components/admin/AdminUsersAnalytics";
+// import AdminNavbar from "../../components/admin/AdminNavbar";
+---
+
+<Layout title="Users">
+  <AdminLayout>
+    
+    <AdminUsersAnalytics client:only="react" />
+  </AdminLayout>
+</Layout>

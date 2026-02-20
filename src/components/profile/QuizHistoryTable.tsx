@@ -28,7 +28,7 @@ const QuizHistoryTable: React.FC = () => {
   useEffect(() => {
     const fetchQuizHistory = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = localStorage.getItem("access_token");
         const API_URL = import.meta.env.PUBLIC_API_URL;
 
         const response = await fetch(`${API_URL}/assessment/history`, {
@@ -105,7 +105,8 @@ const QuizHistoryTable: React.FC = () => {
                   </td>
 
                   {/* <td className="px-4 py-3">
-                    <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium">
+                    <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
+                    >
                       Download
                     </button>
                   </td> */}
