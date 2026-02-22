@@ -44,13 +44,36 @@ export default function AdminUsersAnalytics() {
 
   const token = localStorage.getItem("access_token");
 
-  /* =========================
-     FETCH DATA
-  ========================== */
+  const [userGrowthData, setUserGrowthData] = useState({
+    labels: [],
+    datasets: [
+      {
+        label: "New Users",
+        data: [],
+        borderColor: "#4f46e5",
+        backgroundColor: "rgba(79,70,229,0.1)",
+
+        fill: true,
+      },
+    ],
+  });
+
+  const userGrowthOptions = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1, // 🔥 this forces 1,2,3,4...
+        },
+      },
+    },
+  };
 
   useEffect(() => {
     fetchStats();
     fetchRecentUsers();
+    fetchUserGrowth();
   }, []);
 
   const fetchStats = async () => {
@@ -93,44 +116,41 @@ export default function AdminUsersAnalytics() {
     }
   };
 
-  /* =========================
-     PAGINATION
-  ========================== */
+  const fetchUserGrowth = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const API_URL = import.meta.env.PUBLIC_API_URL;
+
+      const response = await fetch(`${API_URL}/admin/analytics/user-growth`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+
+      setUserGrowthData({
+        labels: result.labels,
+        datasets: [
+          {
+            label: "New Users",
+            data: result.data,
+            borderColor: "#4f46e5",
+            backgroundColor: "rgba(79,70,229,0.1)",
+            // tension: 1,
+            fill: true,
+          },
+        ],
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const indexOfLast = currentPage * usersPerPage;
   const indexOfFirst = indexOfLast - usersPerPage;
   const currentUsers = users.slice(indexOfFirst, indexOfLast);
   const totalPages = Math.ceil(users.length / usersPerPage);
-
-  /* =========================
-     CHART DATA (Dummy for now)
-  ========================== */
-
-  const userGrowthData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "New Users",
-        data: [45, 60, 80, 95, 120, 150],
-        borderColor: "#4f46e5",
-        backgroundColor: "rgba(79,70,229,0.1)",
-        tension: 0.4,
-        fill: true,
-      },
-    ],
-  };
-
-  const activityData = {
-    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-    datasets: [
-      {
-        label: "Active Users",
-        data: [450, 520, 610, 700, 750, 680, 600],
-        backgroundColor: "#10b981",
-        borderRadius: 6,
-      },
-    ],
-  };
 
   const roleDistributionData = {
     labels: ["Users", "Admins"],
@@ -155,10 +175,6 @@ export default function AdminUsersAnalytics() {
         </p>
       </div>
 
-      {/* =========================
-          STAT CARDS
-      ========================== */}
-
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <StatCard
           title="Total Users"
@@ -181,10 +197,6 @@ export default function AdminUsersAnalytics() {
           color="text-red-500"
         />
       </div>
-
-      {/* =========================
-          RECENT USERS TABLE
-      ========================== */}
 
       <div className="bg-white p-8 rounded-2xl shadow-sm border">
         <h2 className="text-xl font-semibold mb-6">Recent Users</h2>
@@ -270,26 +282,23 @@ export default function AdminUsersAnalytics() {
         )}
       </div>
 
-      {/* =========================
-          CHARTS
-      ========================== */}
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
           <h2 className="text-lg font-semibold mb-4">Monthly User Growth</h2>
-          <Line data={userGrowthData} />
+          <div className="mt-24">
+            <Line data={userGrowthData} options={userGrowthOptions} />
+          </div>
         </div>
 
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
-          <h2 className="text-lg font-semibold mb-4">Weekly Active Users</h2>
-          <Bar data={activityData} />
-        </div>
-
-        <div className="bg-white p-6 rounded-2xl shadow-sm border md:col-span-2">
           <h2 className="text-lg font-semibold mb-4">Role Distribution</h2>
           <div className="max-w-sm">
             <Pie data={roleDistributionData} />
           </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow-sm border md:col-span-2">
+          <h2 className="text-lg font-semibold mb-4"></h2>
         </div>
       </div>
     </div>

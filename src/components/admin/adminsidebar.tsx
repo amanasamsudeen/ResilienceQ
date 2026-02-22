@@ -9,7 +9,7 @@ export default function AdminSidebar() {
 
   const handleLogout = () => {
     localStorage.removeItem("access_token"); // remove token
-    window.location.href = "/"; // redirect to home
+    window.location.href = "/login"; // redirect to home
   };
 
   const navClass = (path) =>
@@ -30,9 +30,9 @@ export default function AdminSidebar() {
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">
-        <a href="/admin/dashboard" className={navClass("/admin/dashboard")}>
+        {/* <a href="/admin/dashboard" className={navClass("/admin/dashboard")}>
           Dashboard
-        </a>
+        </a> */}
 
         <a href="/admin/users" className={navClass("/admin/users")}>
           User Analytics

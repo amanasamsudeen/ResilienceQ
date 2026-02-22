@@ -7,7 +7,7 @@ import {
 
 export function AstroSection() {
   return (
-    <section className="py-12 px-6 lg:py-24">
+    <section className="py-12 px-6 lg:py-12">
       <div className="container mx-auto">
         <Card
           shadow={false}

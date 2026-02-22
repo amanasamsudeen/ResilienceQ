@@ -9,6 +9,7 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Line, Bar, Pie } from "react-chartjs-2";
 
 ChartJS.register(
@@ -22,112 +23,128 @@ ChartJS.register(
   Legend,
 );
 
+interface QuizAttempt {
+  id: number;
+  user: string;
+  quiz?: string; // optional if backend doesn't send it
+  date: string;
+  score: number;
+  risk: string;
+  status: string;
+}
+
+interface PaginatedResponse {
+  total: number;
+  page: number;
+  limit: number;
+  total_pages: number;
+  data: QuizAttempt[];
+}
+
 export default function AdminQuizAnalytics() {
   /* =========================
-     DUMMY STATS DATA
+     STATE
   ========================== */
 
-  const stats = {
-    total_quizzes: 12,
-    total_attempts: 5420,
-    average_score: 72,
-    completion_rate: 84,
+  const [attempts, setAttempts] = useState<QuizAttempt[]>([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  const limit = 6;
+
+  const riskCounts = {
+    Low: 0,
+    Moderate: 0,
+    High: 0,
   };
 
-  /* =========================
-     CHART DATA
-  ========================== */
+  const [stats, setStats] = useState({
+    quiz_attempts: 0,
+    high_risk: 0,
+    moderate_risk: 0,
+    low_risk: 0,
+  });
 
-  const quizAttemptsData = {
-    labels: ["Stress Test", "Anxiety Check", "Burnout Quiz", "Mood Test"],
-    datasets: [
-      {
-        label: "Attempts",
-        data: [1400, 1100, 980, 1940],
-        backgroundColor: "#4f46e5",
-        borderRadius: 8,
-      },
-    ],
+  attempts.forEach((attempt) => {
+    if (attempt.risk === "Low") riskCounts.Low++;
+    if (attempt.risk === "Moderate") riskCounts.Moderate++;
+    if (attempt.risk === "High") riskCounts.High++;
+  });
+
+  const fetchAttempts = async (pageNumber: number) => {
+    try {
+      setLoading(true);
+
+      const token = localStorage.getItem("access_token");
+      const API_URL = import.meta.env.PUBLIC_API_URL;
+
+      const response = await fetch(
+        `${API_URL}/admin/quiz-attempts?page=${pageNumber}&limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch quiz attempts");
+      }
+
+      const result: PaginatedResponse = await response.json();
+
+      setAttempts(result.data);
+      setTotalPages(result.total_pages);
+    } catch (error) {
+      console.error("Error fetching attempts:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const averageScoreTrend = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "Average Score",
-        data: [65, 68, 70, 72, 75, 72],
-        borderColor: "#10b981",
-        backgroundColor: "rgba(16,185,129,0.1)",
-        tension: 0.4,
-        fill: true,
-      },
-    ],
+  useEffect(() => {
+    fetchAttempts(page);
+    fetchStats();
+  }, [page]);
+
+  const fetchStats = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch(
+        "http://localhost:8000/admin/quiz-analytics/stats",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      if (!response.ok) throw new Error("Failed to fetch stats");
+
+      const data = await response.json();
+      setStats(data);
+    } catch (error) {
+      console.error("Stats error:", error);
+    } finally {
+      setLoadingStats(false);
+    }
   };
 
-  const riskDistributionData = {
-    labels: ["Low Risk", "Medium Risk", "High Risk"],
-    datasets: [
-      {
-        data: [45, 35, 20],
-        backgroundColor: ["#10b981", "#f59e0b", "#ef4444"],
-      },
-    ],
-  };
+  const downloadCSV = (data: QuizAttempt[], filename: string) => {
+    if (!data.length) return;
 
-  /* =========================
-     TABLE DATA
-  ========================== */
-
-  const recentAttempts = [
-    {
-      id: 1,
-      user: "John Doe",
-      quiz: "Stress Test",
-      date: "2025-02-01",
-      score: 82,
-      risk: "Low",
-      status: "Completed",
-    },
-    {
-      id: 2,
-      user: "Sarah Smith",
-      quiz: "Anxiety Check",
-      date: "2025-02-03",
-      score: 68,
-      risk: "Medium",
-      status: "Completed",
-    },
-    {
-      id: 3,
-      user: "Michael Lee",
-      quiz: "Burnout Quiz",
-      date: "2025-02-05",
-      score: 45,
-      risk: "High",
-      status: "Completed",
-    },
-    {
-      id: 4,
-      user: "Emily Davis",
-      quiz: "Mood Test",
-      date: "2025-02-08",
-      score: 0,
-      risk: "-",
-      status: "Incomplete",
-    },
-  ];
-
-  /* =========================
-     CSV DOWNLOAD FUNCTIONS
-  ========================== */
-
-  const downloadCSV = (data, filename) => {
     const headers = Object.keys(data[0]).join(",");
-    const rows = data.map((row) => Object.values(row).join(","));
+    const rows = data.map((row) =>
+      Object.values(row)
+        .map((val) => `"${val ?? ""}"`)
+        .join(","),
+    );
 
     const csvContent = [headers, ...rows].join("\n");
 
-    const blob = new Blob([csvContent], { type: "text/csv" });
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
 
     const link = document.createElement("a");
@@ -138,19 +155,19 @@ export default function AdminQuizAnalytics() {
     URL.revokeObjectURL(url);
   };
 
-  const downloadSingleUser = (attempt) => {
+  const downloadSingleUser = (attempt: QuizAttempt) => {
     downloadCSV([attempt], `${attempt.user}_report.csv`);
   };
 
   const downloadAllUsers = () => {
-    downloadCSV(recentAttempts, "all_users_quiz_reports.csv");
+    downloadCSV(attempts, `quiz_reports_page_${page}.csv`);
   };
 
-  const getRiskStyle = (risk) => {
+  const getRiskStyle = (risk: string) => {
     switch (risk) {
       case "Low":
         return "bg-green-100 text-green-700";
-      case "Medium":
+      case "Moderate":
         return "bg-yellow-100 text-yellow-700";
       case "High":
         return "bg-red-100 text-red-600";
@@ -159,9 +176,35 @@ export default function AdminQuizAnalytics() {
     }
   };
 
+  const riskDistributionData = {
+    labels: ["Low Risk", "Moderate", "High Risk"],
+    datasets: [
+      {
+        data: [riskCounts.Low, riskCounts.Moderate, riskCounts.High],
+        backgroundColor: ["#10b981", "#f59e0b", "#ef4444"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const pieOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "bottom" as const,
+        labels: {
+          padding: 20,
+          font: {
+            size: 14,
+          },
+        },
+      },
+    },
+    cutout: "65%",
+  };
+
   return (
     <div className="space-y-10">
-      {/* Header */}
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl font-bold text-gray-800">Quiz Analytics</h1>
@@ -170,36 +213,34 @@ export default function AdminQuizAnalytics() {
           </p>
         </div>
 
-        {/* Download All Button */}
         <button
           onClick={downloadAllUsers}
           className="px-5 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition"
         >
-          Download All Reports (CSV)
+          Download Current Page
         </button>
       </div>
 
-      {/* Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <StatCard
-          title="Total Quizzes"
-          value={stats.total_quizzes}
+          title="Quiz Attempts"
+          value={loadingStats ? "..." : stats.quiz_attempts}
           color="text-indigo-600"
         />
         <StatCard
-          title="Total Attempts"
-          value={stats.total_attempts}
-          color="text-blue-600"
+          title="High Risk Users"
+          value={loadingStats ? "..." : stats.high_risk}
+          color="text-red-500"
         />
         <StatCard
-          title="Average Score"
-          value={`${stats.average_score}%`}
-          color="text-green-600"
+          title="Moderate Risk Users"
+          value={loadingStats ? "..." : stats.moderate_risk}
+          color="text-orange-600"
         />
         <StatCard
-          title="Completion Rate"
-          value={`${stats.completion_rate}%`}
-          color="text-yellow-500"
+          title="Low Risk Users"
+          value={loadingStats ? "..." : stats.low_risk}
+          color="text-green-500"
         />
       </div>
 
@@ -211,7 +252,6 @@ export default function AdminQuizAnalytics() {
             <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
               <tr>
                 <th className="px-6 py-4">User</th>
-                <th className="px-6 py-4">Quiz</th>
                 <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4">Score</th>
                 <th className="px-6 py-4">Risk</th>
@@ -221,70 +261,94 @@ export default function AdminQuizAnalytics() {
             </thead>
 
             <tbody>
-              {recentAttempts.map((attempt) => (
-                <tr
-                  key={attempt.id}
-                  className="border-t hover:bg-gray-50 transition"
-                >
-                  <td className="px-6 py-4 font-medium text-gray-800">
-                    {attempt.user}
-                  </td>
-                  <td className="px-6 py-4 text-gray-600">{attempt.quiz}</td>
-                  <td className="px-6 py-4 text-gray-600">{attempt.date}</td>
-                  <td className="px-6 py-4 font-semibold">{attempt.score}%</td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`px-3 py-1 text-xs font-semibold rounded-full ${getRiskStyle(
-                        attempt.risk,
-                      )}`}
-                    >
-                      {attempt.risk}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">{attempt.status}</td>
-                  <td className="px-6 py-4 text-center">
-                    <button
-                      onClick={() => downloadSingleUser(attempt)}
-                      className="px-4 py-2 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition"
-                    >
-                      Download CSV
-                    </button>
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-6 text-gray-500">
+                    Loading...
                   </td>
                 </tr>
-              ))}
+              ) : attempts.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="text-center py-6 text-gray-400">
+                    No data found
+                  </td>
+                </tr>
+              ) : (
+                attempts.map((attempt) => (
+                  <tr
+                    key={attempt.id}
+                    className="border-t hover:bg-gray-50 transition"
+                  >
+                    <td className="px-6 py-4 font-medium text-gray-800">
+                      {attempt.user}
+                    </td>
+
+                    <td className="px-6 py-4 text-gray-600">
+                      {new Date(attempt.date).toLocaleDateString()}
+                    </td>
+
+                    <td className="px-6 py-4 font-semibold">{attempt.score}</td>
+
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-3 py-1 text-xs font-semibold rounded-full ${getRiskStyle(
+                          attempt.risk,
+                        )}`}
+                      >
+                        {attempt.risk}
+                      </span>
+                    </td>
+
+                    <td className="px-6 py-4">{attempt.status}</td>
+
+                    <td className="px-6 py-4 text-center">
+                      <button
+                        onClick={() => downloadSingleUser(attempt)}
+                        className="px-4 py-2 bg-green-600 text-white text-xs rounded-lg hover:bg-green-700 transition"
+                      >
+                        Download
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>
-      </div>
 
-      {/* Charts */}
-      <div className="bg-white p-8 rounded-2xl shadow-sm border">
-        <h2 className="text-xl font-semibold mb-6">
-          Quiz Attempts Distribution
-        </h2>
-        <Bar data={quizAttemptsData} />
-      </div>
+        {/* PAGINATION */}
+        <div className="flex justify-center items-center gap-4 mt-6">
+          <button
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
 
-      <div className="bg-white p-8 rounded-2xl shadow-sm border">
-        <h2 className="text-xl font-semibold mb-6">Average Score Trend</h2>
-        <Line data={averageScoreTrend} />
+          <span className="text-sm font-medium">
+            Page {page} of {totalPages}
+          </span>
+
+          <button
+            disabled={page === totalPages}
+            onClick={() => setPage(page + 1)}
+            className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
 
       <div className="bg-white p-8 rounded-2xl shadow-sm border">
         <h2 className="text-xl font-semibold mb-6">Risk Level Distribution</h2>
         <div className="max-w-md">
-          <Pie data={riskDistributionData} />
+          <Pie data={riskDistributionData} options={pieOptions} />
         </div>
       </div>
-
-      {/* Table */}
     </div>
   );
 }
-
-/* =========================
-   STAT CARD COMPONENT
-========================= */
 
 function StatCard({ title, value, color }) {
   return (

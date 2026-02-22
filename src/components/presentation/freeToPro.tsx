@@ -7,7 +7,8 @@ function StatsCard({ count, title, desc }) {
     <Card color="transparent" shadow={false}>
       <Typography
         variant="h1"
-        className="mb-4 text-5xl text-dark font-extrabold"
+        className="text-5xl font-bold bg-gradient-to-r 
+                   from-blue-600 to-indigo-500 bg-clip-text text-transparent mb-4"
       >
         {count}
       </Typography>
@@ -21,31 +22,31 @@ function StatsCard({ count, title, desc }) {
 
 const stats = [
   {
-    count: "70%",
-    title: "Stress-Related Challenges",
-    desc: "University students report high stress impacting academic performance and wellbeing.",
+    count: "10%",
+    title: "Gender & Humanity Influence",
+    desc: "About 10% of differences in psychological problems among orphan adolescents are explained by gender and level of humanity.",
   },
   {
-    count: "3x",
-    title: "Higher Adaptability",
-    desc: "Individuals with strong resilience adapt better to academic and life challenges.",
+    count: "80–90%",
+    title: "Low Socioeconomic Background",
+    desc: "Most adolescents in resilience studies come from lower socioeconomic backgrounds, and 20–30% have parents with limited literacy.",
   },
   {
-    count: "50%",
-    title: "Reduced Burnout Risk",
-    desc: "Resilience skills significantly lower emotional exhaustion and burnout.",
+    count: "13%",
+    title: "Program-Based Resilience Gain",
+    desc: "Around 13% of resilience improvement was directly linked to structured intervention programs, with lasting positive effects over time.",
   },
   {
-    count: "Early",
-    title: "Self-Awareness Matters",
-    desc: "Early assessment helps identify risk and encourages healthy coping strategies.",
+    count: "50%+",
+    title: "PERMA & Resilience",
+    desc: "More than 50% of resilience is influenced by positive emotions, engagement, meaning, achievement, and emotional regulation.",
   },
 ];
 
 export function FigmaPresentation() {
   return (
     <ThemeProvider>
-      <section className="h-full w-screen bg-white px-8 py-20">
+      <section className="h-full w-screen bg-white px-8 pt-16">
         <div className="container mx-auto relative">
           {/* Heading */}
           <div className="text-left mb-12">
@@ -53,7 +54,7 @@ export function FigmaPresentation() {
               color="blue"
               className="font-bold text-lg mb-4 uppercase"
             >
-              Why Psychological Resilience Matters
+              Research Insights on Resilience
             </Typography>
 
             <Typography
