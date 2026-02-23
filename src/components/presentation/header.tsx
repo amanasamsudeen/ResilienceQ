@@ -40,7 +40,7 @@ export function HeroPresentation() {
               color="blue-gray"
               className=" lg:pr-24 text-gray-600"
             >
-              This self-evaluation platform is developed from the Bharathiar
+              This self-evaluation platform is developed based on the Bharathiar
               University Resilience Scale (BURS-2014) to help you understand
               your level of psychological resilience. It encourages reflection
               on how you adapt to adversity, stress, uncertainty, and
@@ -49,7 +49,7 @@ export function HeroPresentation() {
             </Typography>
 
             <div className="flex flex-wrap justify-center lg:justify-start">
-              <Typography className=" py-1 font-bold uppercase text-blue-600">
+              <Typography className=" py-3 font-bold uppercase text-blue-600">
                 Are you ready to assess your resilience?
               </Typography>
               {/* <a href="quiz">
@@ -79,7 +79,7 @@ export function HeroPresentation() {
 
         {/* Bottom Wave Shape */}
         <svg
-          className="absolute -bottom-40 left-0 w-full"
+          className="absolute left-0 w-full -bottom-[45px]"
           viewBox="0 0 1440 120"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

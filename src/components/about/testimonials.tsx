@@ -59,7 +59,7 @@ export function TestimonialSectionTwo() {
                 <Typography className="font-semibold">
                   Correspondence
                 </Typography>
-                <Typography>Prof. Annalakshmi Narayanan</Typography>
+                <Typography>Prof. N. Annalakshmi</Typography>
                 <Typography>
                   Department of Psychology, Bharathiar University
                   <br />

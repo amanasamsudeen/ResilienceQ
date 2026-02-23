@@ -39,11 +39,10 @@ export function HeroSectionTwo() {
               <strong>
                 Bharathiar University Resilience Scale (BURS-2014)
               </strong>{" "}
-              by Prof.N. Annalakshmi Narayanan. The platform is designed for
-              students, young adults, educators, counselors, mental-health
-              professionals, and researchers to assess individual resilience
-              across multiple psychological domains in an engaging and
-              accessible format.
+              by Prof.N. Annalakshmi. The platform is designed for students,
+              young adults, educators, counselors, mental-health professionals,
+              and researchers to assess individual resilience across multiple
+              psychological domains in an engaging and accessible format.
             </Typography>
 
             <Typography className="mb-6 text-lg leading-relaxed text-blue-gray-700 lg:pr-20">

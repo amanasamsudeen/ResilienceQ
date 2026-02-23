@@ -30,10 +30,10 @@ export function FeatureSectionThree() {
             </Typography>
 
             <Typography className="text-gray-700">
-              The BURS–2014, developed by{" "}
-              <strong>Prof. N. Annalakshmi Narayanan</strong>, consists of 30
-              self-report items rated on a 5-point Likert scale. Scores range
-              from 30 to 150, with higher scores indicating greater resilience.
+              The BURS–2014, developed by <strong>Prof. N. Annalakshmi</strong>,
+              consists of 30 self-report items rated on a 5-point Likert scale.
+              Scores range from 30 to 150, with higher scores indicating greater
+              resilience.
             </Typography>
 
             <div className="space-y-6">
