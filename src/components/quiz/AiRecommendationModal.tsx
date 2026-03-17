@@ -7,7 +7,6 @@ import {
 } from "@material-tailwind/react";
 import { useEffect, useState, useCallback } from "react";
 
-// Matches the Pydantic schema from your Gemini backend
 type RecommendationItem = {
   title: string;
   description: string;
@@ -56,9 +55,7 @@ export default function AIRecommendationModal({
       });
 
       if (!res.ok) throw new Error("AI Analysis failed");
-
       const data = await res.json();
-      // data should now be the full RecommendationData object from Gemini response.parsed
       setRecommendation(data);
     } catch (err) {
       setError(
@@ -75,15 +72,62 @@ export default function AIRecommendationModal({
   }, [fetchAI]);
 
   const handleClose = () => {
+    // Prevent closing if a download is in progress
     if (downloading) return;
     setOpen(false);
     onClose();
+  };
+
+  const handleDownloadPDF = async (e: React.MouseEvent) => {
+    // CRITICAL FIX: Stop the click from reaching the Dialog handler
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (!recommendation || downloading) return;
+
+    try {
+      setDownloading(true);
+      const res = await fetch(`${API_URL}/recommendations/pdf`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          resilience_level: resilienceLevel,
+          total_score: score,
+          resilience_state: recommendation.resilience_state,
+          recommendations: recommendation.recommendations,
+          encouragement: recommendation.encouragement,
+        }),
+      });
+
+      if (!res.ok) throw new Error("PDF generation failed");
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      // CRITICAL FIX: Use hidden anchor tag instead of window.open to bypass popup blockers
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `Resilience_Recommendations_${score}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+
+      // Cleanup
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("PDF Error:", err);
+      alert("Could not generate PDF. Please try again.");
+    } finally {
+      setDownloading(false);
+    }
   };
 
   return (
     <Dialog
       open={open}
       handler={handleClose}
+      // Prevents closing when clicking outside during analysis/download
+      dismiss={{ enabled: !loading && !downloading }}
       size="xl"
       className="!bg-black/40 backdrop-blur-sm outline-none"
     >
@@ -156,7 +200,6 @@ export default function AIRecommendationModal({
                   </div>
                 </div>
 
-                {/* Resilience State Description */}
                 <section>
                   <Typography
                     variant="h5"
@@ -170,7 +213,6 @@ export default function AIRecommendationModal({
                   </Typography>
                 </section>
 
-                {/* Actionable Recommendations */}
                 <section>
                   <Typography
                     variant="h5"
@@ -206,7 +248,6 @@ export default function AIRecommendationModal({
                   </div>
                 </section>
 
-                {/* Encouragement Card */}
                 <div className="bg-gradient-to-br from-indigo-50 to-blue-50 p-8 rounded-3xl border border-indigo-100 relative overflow-hidden">
                   <div className="relative z-10">
                     <Typography
@@ -218,9 +259,6 @@ export default function AIRecommendationModal({
                     <Typography className="text-indigo-800/80 italic leading-relaxed font-medium">
                       "{recommendation.encouragement}"
                     </Typography>
-                  </div>
-                  <div className="absolute -bottom-10 -right-10 text-indigo-200/30 font-black text-9xl select-none">
-                    “
                   </div>
                 </div>
               </div>
@@ -234,16 +272,23 @@ export default function AIRecommendationModal({
             variant="text"
             color="blue-gray"
             onClick={handleClose}
+            disabled={downloading}
             className="font-bold"
           >
-            Finish Review
+            Close
           </Button>
           <Button
-            className="bg-blue-600 hover:shadow-blue-200"
-            onClick={() => window.print()} // Quick alternative to custom PDF logic
-            disabled={loading || !!error}
+            className="bg-blue-600 hover:shadow-blue-200 flex items-center gap-2"
+            disabled={loading || !!error || downloading}
+            onClick={handleDownloadPDF}
           >
-            Print Results
+            {downloading ? (
+              <>
+                <Spinner className="h-4 w-4" /> Generating PDF...
+              </>
+            ) : (
+              "Download PDF"
+            )}
           </Button>
         </div>
       </DialogBody>

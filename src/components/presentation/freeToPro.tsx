@@ -46,26 +46,23 @@ const stats = [
 export function FigmaPresentation() {
   return (
     <ThemeProvider>
-      <section className="h-full w-screen bg-white px-8 pt-16">
-        <div className="container mx-auto relative">
+      <section className="w-full bg-gradient-to-b from-white to-blue-50 py-24 px-6 lg:px-16">
+        <div className="max-w-6xl mx-auto">
           {/* Heading */}
-          <div className="text-left mb-12">
-            <Typography
-              color="blue"
-              className="font-bold text-lg mb-4 uppercase"
-            >
+          <div className="text-center mb-20">
+            <Typography className="font-semibold tracking-widest text-blue-600 uppercase mb-4">
               Research Insights on Resilience
             </Typography>
 
             <Typography
               variant="h2"
               color="blue-gray"
-              className="mb-6 leading-tight"
+              className="font-bold mb-6 leading-tight"
             >
               Resilience is the Foundation of Mental Well-Being
             </Typography>
 
-            <Typography color="blue-gray" className="mb-6 lg:w-[32rem]">
+            <Typography color="gray" className="max-w-2xl mx-auto">
               Psychological resilience reflects an individual’s ability to cope
               with stress, adapt to change, and recover from adversity.
               Understanding resilience early can prevent long-term mental health
@@ -73,26 +70,37 @@ export function FigmaPresentation() {
             </Typography>
           </div>
 
-          {/* Content */}
-          <div className="lg:flex relative items-center">
-            <div className="lg:w-1/2">
-              <div className="grid gap-y-16 gap-x-8 grid-cols-2 mb-10">
-                {stats.map((props, key) => (
-                  <StatsCard key={key} {...props} />
-                ))}
+          {/* Stats Layout */}
+          <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
+            {stats.map((item, index) => (
+              <div
+                key={index}
+                className="relative bg-white border border-gray-200 rounded-2xl p-8 
+                           hover:shadow-xl transition duration-300"
+              >
+                {/* Accent Line */}
+                <div className="absolute top-0 left-0 h-1 w-full bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-2xl" />
+
+                <Typography
+                  variant="h2"
+                  className="text-4xl font-extrabold text-indigo-600 mb-4"
+                >
+                  {item.count}
+                </Typography>
+
+                <Typography
+                  variant="h6"
+                  color="blue-gray"
+                  className="font-semibold mb-3"
+                >
+                  {item.title}
+                </Typography>
+
+                <Typography color="gray" className="text-sm leading-relaxed">
+                  {item.desc}
+                </Typography>
               </div>
-
-              {/* <Button color="dark" className="flex items-center">
-                Take the Resilience Assessment
-              </Button> */}
-            </div>
-
-            {/* Visual */}
-            <img
-              src="career.jpg"
-              alt="resilience illustration"
-              className="lg:w-1/2 rounded-3xl hidden md:flex ml-auto lg:absolute -right-32 -top-24 shadow-lg"
-            />
+            ))}
           </div>
         </div>
       </section>

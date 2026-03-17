@@ -4,6 +4,7 @@ import ResilienceTrendChart from "./ResilienceTrendChart";
 import AIRecommendationPreview from "./AIRecommendationPreview";
 import DownloadReportButton from "./DownloadReportButton";
 import Navbar from "../navbar";
+import AICoachPanel from "./AiCoachpanel";
 
 export default function ProfileDashboard() {
   return (
@@ -14,7 +15,8 @@ export default function ProfileDashboard() {
       <QuizHistoryTable />
       <div className="grid md:grid-cols-2 gap-6">
         <ResilienceTrendChart />
-        <AIRecommendationPreview />
+        <AICoachPanel />
+        {/* <AIRecommendationPreview /> */}
       </div>
       {/* <div className="flex justify-end">
         <DownloadReportButton />

@@ -19,7 +19,6 @@ export default function AiAssistantPanel() {
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
-  // Auto scroll to bottom
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -35,7 +34,8 @@ export default function AiAssistantPanel() {
     try {
       const API_URL = import.meta.env.PUBLIC_API_URL;
 
-      const response = await fetch(`${API_URL}/api/chat`, {
+      // 1. Point to your specific chat endpoint
+      const response = await fetch(`${API_URL}/ai/chatbot`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -45,20 +45,23 @@ export default function AiAssistantPanel() {
         }),
       });
 
-      const data: { answer: string; sources: string[] } = await response.json();
+      if (!response.ok) throw new Error("Server error");
+
+      const data: { answer: string } = await response.json();
 
       const aiMessage: Message = {
         role: "assistant",
-        content: data.answer || "No response from AI",
+        content: data.answer || "I'm sorry, I couldn't process that.",
       };
 
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
+      console.error("Chat Error:", error);
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: "⚠️ Error connecting to AI server.",
+          content: "I'm having trouble connecting. Please check your internet.",
         },
       ]);
     } finally {

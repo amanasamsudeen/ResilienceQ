@@ -75,7 +75,7 @@ export function SignIn() {
 
       setTimeout(() => {
         if (loginData.role === "admin") {
-          window.location.href = "/admin/dashboard";
+          window.location.href = "/admin/users";
         } else {
           window.location.href = "/";
         }
@@ -89,10 +89,9 @@ export function SignIn() {
   return (
     <ThemeProvider>
       <section className="relative grid h-screen lg:grid-cols-2 items-center bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-        {/* 🔹 HOME BUTTON */}
         <IconButton
           variant="text"
-          onClick={() => (window.location.href = "/")}
+          onClick={() => (window.location.href = "/#")}
           className="absolute top-6 left-6 z-50"
         >
           <HomeIcon className="h-6 w-6 text-indigo-600" />

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 
 interface QuizHistory {
   id: number;
-  date: string;
   score: number;
   level: "Low" | "Moderate" | "High";
   created_at: string;
+  ai_recommendation?: string; // Added AI recommendation
 }
+
+const ROWS_PER_PAGE = 6;
 
 const getLevelStyle = (level: string) => {
   switch (level) {
@@ -24,6 +26,7 @@ const getLevelStyle = (level: string) => {
 const QuizHistoryTable: React.FC = () => {
   const [quizHistory, setQuizHistory] = useState<QuizHistory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const fetchQuizHistory = async () => {
@@ -53,6 +56,11 @@ const QuizHistoryTable: React.FC = () => {
     fetchQuizHistory();
   }, []);
 
+  // Pagination logic
+  const totalPages = Math.ceil(quizHistory.length / ROWS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ROWS_PER_PAGE;
+  const currentData = quizHistory.slice(startIndex, startIndex + ROWS_PER_PAGE);
+
   if (loading) {
     return <p className="mt-6 text-gray-600">Loading history...</p>;
   }
@@ -69,20 +77,20 @@ const QuizHistoryTable: React.FC = () => {
             <tr className="bg-gray-100 text-left text-sm text-gray-600 uppercase">
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Score</th>
-
               <th className="px-4 py-3">Level</th>
+              {/* <th className="px-4 py-3">AI Recommendation</th> */}
             </tr>
           </thead>
 
           <tbody>
-            {quizHistory.length === 0 ? (
+            {currentData.length === 0 ? (
               <tr>
-                <td colSpan={5} className="text-center py-6 text-gray-500">
+                <td colSpan={4} className="text-center py-6 text-gray-500">
                   No quiz attempts found.
                 </td>
               </tr>
             ) : (
-              quizHistory.map((quiz) => (
+              currentData.map((quiz) => (
                 <tr
                   key={quiz.id}
                   className="border-b hover:bg-gray-50 transition"
@@ -90,6 +98,7 @@ const QuizHistoryTable: React.FC = () => {
                   <td className="px-4 py-3 text-gray-700">
                     {new Date(quiz.created_at).toLocaleDateString("en-GB")}
                   </td>
+
                   <td className="px-4 py-3 font-medium text-gray-800">
                     {quiz.score}
                   </td>
@@ -104,11 +113,10 @@ const QuizHistoryTable: React.FC = () => {
                     </span>
                   </td>
 
-                  {/* <td className="px-4 py-3">
-                    <button className="text-indigo-600 hover:text-indigo-800 text-sm font-medium"
-                    >
-                      Download
-                    </button>
+                  {/* <td className="px-4 py-3 text-sm text-gray-600 max-w-xs">
+                    {quiz.ai_recommendation
+                      ? quiz.ai_recommendation.slice(0, 80) + "..."
+                      : "No recommendation"}
                   </td> */}
                 </tr>
               ))
@@ -116,6 +124,31 @@ const QuizHistoryTable: React.FC = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={() => setCurrentPage((prev) => prev - 1)}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          <span className="text-sm text-gray-600">
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-200 rounded-lg disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, Typography, Button } from "@material-tailwind/react";
 import VisualLikert from "../LikertOptions";
 import ProgressBar from "../ProgressBar";
@@ -40,6 +40,7 @@ const questions = [
 
 export default function AssessmentTab({ answers, setAnswers, onFinish }) {
   const [page, setPage] = useState(0);
+  const containerRef = useRef(null);
 
   const startIndex = page * QUESTIONS_PER_PAGE;
   const pageQuestions = questions.slice(
@@ -65,8 +66,17 @@ export default function AssessmentTab({ answers, setAnswers, onFinish }) {
     }
   };
 
+  useEffect(() => {
+    if (containerRef.current) {
+      containerRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [page]);
+
   return (
-    <Card className="p-8 shadow-xl rounded-2xl">
+    <Card className="p-8 shadow-xl rounded-2xl" ref={containerRef}>
       <Typography variant="h4" className="mb-2 font-bold">
         Bharathiar University Resilience Scale
       </Typography>
