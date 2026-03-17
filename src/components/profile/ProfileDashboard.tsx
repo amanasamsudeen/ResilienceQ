@@ -16,7 +16,7 @@ export default function ProfileDashboard() {
       <div className="grid md:grid-cols-2 gap-6">
         <ResilienceTrendChart />
         <AICoachPanel />
-        {/* <AIRecommendationPreview /> */}
+        <AIRecommendationPreview />
       </div>
       {/* <div className="flex justify-end">
         <DownloadReportButton />
