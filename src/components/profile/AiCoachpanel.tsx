@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 interface TrendItem {
   date: string;
@@ -11,13 +10,15 @@ export default function AICoachPanel() {
   const [history, setHistory] = useState<TrendItem[]>([]);
   const [insight, setInsight] = useState("");
   const [loading, setLoading] = useState(false);
+  const [username, setUsername] = useState("");
 
   const API_URL = import.meta.env.PUBLIC_API_URL;
 
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
-  const username = user?.name;
-
   useEffect(() => {
+    // Ensure this only runs in browser
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    setUsername(userData?.name || "");
+
     fetchHistory();
   }, []);
 
@@ -25,13 +26,16 @@ export default function AICoachPanel() {
     try {
       const token = localStorage.getItem("access_token");
 
-      const response = await axios.get(`${API_URL}/assessment/history`, {
+      const response = await fetch(`${API_URL}/assessment/history`, {
+        method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const formatted = response.data.map((item: any) => ({
+      const data = await response.json();
+
+      const formatted = data.map((item: any) => ({
         date: new Date(item.created_at).toLocaleDateString(),
         score: item.score,
         level: item.level,
@@ -49,20 +53,21 @@ export default function AICoachPanel() {
 
       const token = localStorage.getItem("access_token");
 
-      const response = await axios.post(
-        `${API_URL}/ai/resilience-coach`,
-        {
-          username: username,
-          history: history,
+      const response = await fetch(`${API_URL}/ai/resilience-coach`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+        body: JSON.stringify({
+          username,
+          history,
+        }),
+      });
 
-      setInsight(response.data.insight);
+      const data = await response.json();
+
+      setInsight(data.insight);
     } catch (error) {
       console.error("AI Coach error", error);
     } finally {

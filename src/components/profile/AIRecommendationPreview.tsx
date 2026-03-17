@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 interface RecommendationItem {
   title: string;
@@ -25,6 +24,8 @@ export default function ResilienceAICoach() {
   const [chatLoading, setChatLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const API_URL = import.meta.env.PUBLIC_API_URL;
+
   useEffect(() => {
     fetchLatestRecommendation();
   }, []);
@@ -33,23 +34,25 @@ export default function ResilienceAICoach() {
     try {
       setLoading(true);
 
-      const response = await axios.get<AIRecommendationResponse>(
-        "http://localhost:8000/ai/latest-recommendation",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        },
-      );
+      const token = localStorage.getItem("access_token");
 
-      setData(response.data);
+      const response = await fetch(`${API_URL}/ai/latest-recommendation`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const result = await response.json();
+
+      setData(result);
 
       setMessages([
         {
           role: "assistant",
           message: `Hello 👋 I'm your AI Resilience Coach.
 
-Your current resilience level is **${response.data.resilience_state}**.
+Your current resilience level is **${result.resilience_state}**.
 
 I can help you:
 • Build stronger coping strategies
@@ -76,33 +79,30 @@ Ask me anything about your resilience journey.`,
     setChatLoading(true);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/ai/coach-chat",
-        {
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch(`${API_URL}/ai/coach-chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
           message: input,
-
-          // profile context
-          resilience_level: data?.resilience_state || "Unknown",
-          score: data?.total_score ?? 0,
-
-          // AI memory
+          resilience_level: data.resilience_state || "Unknown",
+          score: data.total_score ?? 0,
           history: newMessages,
-
-          // personalized recommendations
           recommendations: data.recommendations,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        },
-      );
+        }),
+      });
+
+      const result = await response.json();
 
       setMessages([
         ...newMessages,
         {
           role: "assistant",
-          message: response.data.reply,
+          message: result.reply,
         },
       ]);
     } catch (err) {
@@ -145,7 +145,6 @@ Ask me anything about your resilience journey.`,
       )}
 
       {/* Chat Window */}
-
       <div className="border rounded-xl p-4 h-72 overflow-y-auto bg-gray-50">
         {messages.map((msg, index) => (
           <div
@@ -172,7 +171,6 @@ Ask me anything about your resilience journey.`,
       </div>
 
       {/* Input */}
-
       <div className="flex mt-4 gap-2">
         <input
           type="text"

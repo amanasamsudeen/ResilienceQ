@@ -7,11 +7,12 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 export default function ResilienceTrendChart() {
   const [data, setData] = useState<any[]>([]);
   const [insight, setInsight] = useState("");
+
+  const API_URL = import.meta.env.PUBLIC_API_URL;
 
   useEffect(() => {
     fetchQuizHistory();
@@ -19,17 +20,19 @@ export default function ResilienceTrendChart() {
 
   const fetchQuizHistory = async () => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/assessment/history",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
+      const token = localStorage.getItem("access_token");
+
+      const response = await fetch(`${API_URL}/assessment/history`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
+      });
+
+      const result = await response.json();
 
       // Transform backend data for chart
-      const formattedData = response.data.map((item: any) => ({
+      const formattedData = result.map((item: any) => ({
         date: new Date(item.created_at).toLocaleDateString(),
         score: item.score,
         level: item.level,
@@ -46,19 +49,22 @@ export default function ResilienceTrendChart() {
 
   const fetchAIInsight = async (trendData: any[]) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/ai/resilience-insight",
-        {
-          history: trendData,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        },
-      );
+      const token = localStorage.getItem("access_token");
 
-      setInsight(response.data.insight);
+      const response = await fetch(`${API_URL}/ai/resilience-insight`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          history: trendData,
+        }),
+      });
+
+      const result = await response.json();
+
+      setInsight(result.insight);
     } catch (error) {
       console.error("AI insight error", error);
     }
