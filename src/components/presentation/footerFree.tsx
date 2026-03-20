@@ -94,7 +94,8 @@ export function Footer() {
           <Typography className="text-xs leading-relaxed text-gray-500 max-w-2xl text-center md:text-right">
             ResilienceQ is a self-assessment and educational platform. It does
             not provide medical diagnosis or emergency services. If you are in
-            distress, please seek support from a qualified professional.
+            distress, please seek support from a qualified professional. Its
+            developed by Amana Samsudeen
           </Typography>
         </div>
       </div>

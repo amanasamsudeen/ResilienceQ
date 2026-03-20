@@ -277,7 +277,7 @@ export default function AIRecommendationModal({
           >
             Close
           </Button>
-          <Button
+          {/* <Button
             className="bg-blue-600 hover:shadow-blue-200 flex items-center gap-2"
             disabled={loading || !!error || downloading}
             onClick={handleDownloadPDF}
@@ -289,7 +289,7 @@ export default function AIRecommendationModal({
             ) : (
               "Download PDF"
             )}
-          </Button>
+          </Button> */}
         </div>
       </DialogBody>
     </Dialog>

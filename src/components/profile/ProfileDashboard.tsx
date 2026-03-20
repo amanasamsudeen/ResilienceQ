@@ -14,7 +14,7 @@ export default function ProfileDashboard() {
 
       <QuizHistoryTable />
       <div className="grid md:grid-cols-2 gap-6">
-        <ResilienceTrendChart />
+        {/* <ResilienceTrendChart /> */}
         <AICoachPanel />
         <AIRecommendationPreview />
       </div>

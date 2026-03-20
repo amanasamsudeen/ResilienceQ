@@ -1,20 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-interface RecommendationItem {
-  title: string;
-  description: string;
-}
-
-interface AIRecommendationResponse {
-  resilience_state: string;
-  total_score: number;
-  recommendations: RecommendationItem[];
-}
-
-interface ChatMessage {
-  role: string;
-  message: string;
-}
+// ... (Interfaces remain the same)
 
 export default function ResilienceAICoach() {
   const [data, setData] = useState<AIRecommendationResponse | null>(null);
@@ -22,9 +8,16 @@ export default function ResilienceAICoach() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(true);
   const [chatLoading, setChatLoading] = useState(false);
-  const [error, setError] = useState("");
 
+  const scrollRef = useRef<HTMLDivElement>(null);
   const API_URL = import.meta.env.PUBLIC_API_URL;
+
+  // Auto-scroll to bottom
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    }
+  }, [messages, chatLoading]);
 
   useEffect(() => {
     fetchLatestRecommendation();
@@ -33,38 +26,22 @@ export default function ResilienceAICoach() {
   const fetchLatestRecommendation = async () => {
     try {
       setLoading(true);
-
       const token = localStorage.getItem("access_token");
-
       const response = await fetch(`${API_URL}/ai/latest-recommendation`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
       const result = await response.json();
-
       setData(result);
 
+      // Initial Coach Message
       setMessages([
         {
           role: "assistant",
-          message: `Hello 👋 I'm your AI Resilience Coach.
-
-Your current resilience level is **${result.resilience_state}**.
-
-I can help you:
-• Build stronger coping strategies
-• Improve emotional resilience
-• Maintain positive habits
-
-Ask me anything about your resilience journey.`,
+          message: `Hello! I'm your Resilience Coach. Your current level is ${result.resilience_state}. How can I support you today?`,
         },
       ]);
     } catch (err) {
-      console.error(err);
-      setError("Failed to load AI coach.");
+      console.error("Fetch error:", err);
     } finally {
       setLoading(false);
     }
@@ -73,14 +50,14 @@ Ask me anything about your resilience journey.`,
   const sendMessage = async () => {
     if (!input.trim() || !data) return;
 
-    const newMessages = [...messages, { role: "user", message: input }];
-    setMessages(newMessages);
+    const userMessage = { role: "user", message: input };
+    setMessages((prev) => [...prev, userMessage]);
+    const currentInput = input;
     setInput("");
     setChatLoading(true);
 
     try {
       const token = localStorage.getItem("access_token");
-
       const response = await fetch(`${API_URL}/ai/coach-chat`, {
         method: "POST",
         headers: {
@@ -88,101 +65,96 @@ Ask me anything about your resilience journey.`,
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          message: input,
-          resilience_level: data.resilience_state || "Unknown",
-          score: data.total_score ?? 0,
-          history: newMessages,
+          message: currentInput,
+          resilience_level: data.resilience_state,
+
+          history: [...messages, userMessage],
           recommendations: data.recommendations,
         }),
       });
 
       const result = await response.json();
-
-      setMessages([
-        ...newMessages,
-        {
-          role: "assistant",
-          message: result.reply,
-        },
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", message: result.reply },
       ]);
     } catch (err) {
-      console.error(err);
+      console.error("Chat error:", err);
     } finally {
       setChatLoading(false);
     }
   };
 
+  if (loading)
+    return (
+      <div className="p-10 text-center text-gray-500">Loading coach...</div>
+    );
+
   return (
-    <div className="bg-white shadow-xl rounded-2xl p-6 max-w-2xl mx-auto">
-      <h3 className="text-2xl font-semibold mb-4 text-indigo-700">
-        🧠 AI Resilience Coach
-      </h3>
+    <div className="max-w-2xl mx-auto mt-10 border border-gray-200 rounded-2xl shadow-sm bg-white overflow-hidden flex flex-col h-[600px]">
+      {/* Header */}
+      <div className="p-4 border-b bg-gray-50 flex justify-between items-center">
+        <h2 className="font-semibold text-gray-800">Ask me anything</h2>
+        <span className="text-xs font-medium px-2 py-1 bg-indigo-50 text-indigo-600 rounded-md">
+          Level: {data?.resilience_state}
+        </span>
+      </div>
 
-      {loading && (
-        <p className="text-gray-500">Loading your resilience profile...</p>
-      )}
-
-      {error && <p className="text-red-500">{error}</p>}
-
-      {data && (
-        <div className="mb-6">
-          <p className="font-medium text-indigo-600">
-            Resilience Level: {data.resilience_state}
-          </p>
-
-          <div className="mt-3 space-y-2">
-            {data.recommendations.map((rec, index) => (
-              <div
-                key={index}
-                className="border border-indigo-100 p-3 rounded-lg bg-indigo-50"
-              >
-                <h4 className="font-semibold text-indigo-700">{rec.title}</h4>
-                <p className="text-gray-700 text-sm">{rec.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Chat Window */}
-      <div className="border rounded-xl p-4 h-72 overflow-y-auto bg-gray-50">
+      {/* Chat Area */}
+      <div
+        ref={scrollRef}
+        className="flex-1 overflow-y-auto p-4 space-y-4 bg-white"
+      >
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`mb-3 ${
-              msg.role === "user" ? "text-right" : "text-left"
-            }`}
+            className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
           >
             <div
-              className={`inline-block px-4 py-2 rounded-xl text-sm ${
+              className={`max-w-[80%] px-4 py-2 rounded-2xl text-sm ${
                 msg.role === "user"
-                  ? "bg-indigo-600 text-white"
-                  : "bg-gray-200 text-gray-800"
+                  ? "bg-indigo-600 text-white rounded-tr-none"
+                  : "bg-gray-100 text-gray-800 rounded-tl-none"
               }`}
             >
-              {msg.message}
+              <div className="whitespace-pre-line leading-relaxed">
+                {/* Basic Bold formatting for 'High' */}
+                {msg.message.split("**High**").map((part, i, arr) => (
+                  <span key={i}>
+                    {part}
+                    {i < arr.length - 1 && (
+                      <span className="font-bold text-emerald-600">High</span>
+                    )}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         ))}
 
         {chatLoading && (
-          <p className="text-gray-400 text-sm">Coach is thinking...</p>
+          <div className="flex justify-start">
+            <div className="bg-gray-100 px-4 py-2 rounded-2xl rounded-tl-none text-xs text-gray-400 animate-pulse">
+              Coach is typing...
+            </div>
+          </div>
         )}
       </div>
 
-      {/* Input */}
-      <div className="flex mt-4 gap-2">
+      {/* Input Area */}
+      <div className="p-4 border-t bg-white flex gap-2">
         <input
           type="text"
-          placeholder="Ask your resilience coach..."
-          className="flex-1 border rounded-xl px-4 py-2"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          placeholder="Type a message..."
+          className="flex-1 border border-gray-300 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
         />
-
         <button
           onClick={sendMessage}
-          className="bg-indigo-600 text-white px-5 py-2 rounded-xl hover:bg-indigo-700"
+          disabled={chatLoading || !input.trim()}
+          className="bg-indigo-600 text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-indigo-700 disabled:opacity-50"
         >
           Send
         </button>

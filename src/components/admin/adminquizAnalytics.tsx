@@ -228,17 +228,17 @@ export default function AdminQuizAnalytics() {
           color="text-indigo-600"
         />
         <StatCard
-          title="High Risk Users"
+          title="High Resilience Users"
           value={loadingStats ? "..." : stats.high_risk}
           color="text-red-500"
         />
         <StatCard
-          title="Moderate Risk Users"
+          title="Moderate Resilience Users"
           value={loadingStats ? "..." : stats.moderate_risk}
           color="text-orange-600"
         />
         <StatCard
-          title="Low Risk Users"
+          title="Low Resilience Users"
           value={loadingStats ? "..." : stats.low_risk}
           color="text-green-500"
         />
@@ -254,7 +254,7 @@ export default function AdminQuizAnalytics() {
                 <th className="px-6 py-4">User</th>
                 <th className="px-6 py-4">Date</th>
                 <th className="px-6 py-4">Score</th>
-                <th className="px-6 py-4">Risk</th>
+                <th className="px-6 py-4">Resilience level</th>
                 <th className="px-6 py-4">Status</th>
                 <th className="px-6 py-4 text-center">Download</th>
               </tr>

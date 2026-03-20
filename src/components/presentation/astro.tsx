@@ -4,8 +4,25 @@ import {
   SparklesIcon,
   ChartBarIcon,
 } from "@heroicons/react/24/outline";
+import { useState } from "react";
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
 
 export function AstroSection() {
+  const [user, setUser] = useState<User | null>(null);
+
+  const handleClick = () => {
+    if (!user) {
+      window.location.href = "/login?message=login_required";
+      return;
+    }
+    window.location.href = "/quiz";
+  };
+
   return (
     <section className="py-12 px-6 lg:py-12">
       <div className="container mx-auto">
@@ -59,6 +76,7 @@ export function AstroSection() {
             </div>
             <a href="/quiz">
               <Button
+                onClick={handleClick}
                 size="lg"
                 color="white"
                 className="mt-12 flex items-center gap-2 font-semibold shadow-lg hover:shadow-xl"
