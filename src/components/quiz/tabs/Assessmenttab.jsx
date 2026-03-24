@@ -5,6 +5,9 @@ import ProgressBar from "../ProgressBar";
 
 const QUESTIONS_PER_PAGE = 5;
 
+// ✅ Negative question indices (0-based)
+const negativeQuestions = [5, 6, 9, 10, 12, 15, 16, 23, 25, 27];
+
 const questions = [
   "I can remain balanced in my emotion irrespective of whether I succeed or fail.",
   "I can easily revise my plans without accepting defeat when I get stuck up.",
@@ -48,6 +51,7 @@ export default function AssessmentTab({ answers, setAnswers, onFinish }) {
     startIndex + QUESTIONS_PER_PAGE,
   );
 
+  // ✅ Keep user input unchanged
   const handleAnswer = (index, value) => {
     const updated = [...answers];
     updated[startIndex + index] = value;
@@ -58,11 +62,29 @@ export default function AssessmentTab({ answers, setAnswers, onFinish }) {
     (_, i) => answers[startIndex + i] !== null,
   );
 
+  // ✅ NEW: Score calculation with reverse scoring
+  const calculateScore = () => {
+    let total = 0;
+
+    answers.forEach((value, index) => {
+      if (value === null) return;
+
+      if (negativeQuestions.includes(index)) {
+        total += 6 - value; // reverse scoring
+      } else {
+        total += value;
+      }
+    });
+
+    return total;
+  };
+
   const nextPage = () => {
     if (startIndex + QUESTIONS_PER_PAGE < questions.length) {
       setPage(page + 1);
     } else {
-      onFinish();
+      const finalScore = calculateScore(); // ✅ compute score here
+      onFinish(finalScore); // ✅ pass score
     }
   };
 

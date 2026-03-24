@@ -78,8 +78,9 @@ export default function AdminUsersAnalytics() {
 
   const fetchStats = async () => {
     try {
+      const API_URL = import.meta.env.PUBLIC_API_URL;
       const token = localStorage.getItem("access_token");
-      const response = await fetch("http://localhost:8000/admin/user-stats", {
+      const response = await fetch(`${API_URL}/admin/user-stats`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -99,7 +100,7 @@ export default function AdminUsersAnalytics() {
   const fetchRecentUsers = async () => {
     try {
       const token = localStorage.getItem("access_token");
-      const response = await fetch("http://localhost:8000/admin/recent-users", {
+      const response = await fetch(`${API_URL}/admin/recent-users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -15,8 +15,18 @@ type Props = {
 
 export default function ResultModal({ answers, excelPath, onClose }: Props) {
   const [showAI, setShowAI] = useState(false);
+  const negativeQuestions = [5, 6, 9, 10, 12, 15, 16, 23, 25, 27];
 
-  const score = answers.reduce((sum, val) => sum + (val ?? 0), 0);
+  const score = answers.reduce<number>((sum, val, index) => {
+    if (val === null) return sum;
+
+    if (negativeQuestions.includes(index)) {
+      return sum + (6 - val); // reverse scoring
+    }
+
+    return sum + val;
+  }, 0);
+
   const maxScore = 150;
 
   let resilienceLevel = "";
