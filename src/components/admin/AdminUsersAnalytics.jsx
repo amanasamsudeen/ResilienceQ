@@ -41,7 +41,7 @@ export default function AdminUsersAnalytics() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 5;
-
+  const API_URL = import.meta.env.PUBLIC_API_URL;
   const token = localStorage.getItem("access_token");
 
   const [userGrowthData, setUserGrowthData] = useState({
@@ -120,7 +120,6 @@ export default function AdminUsersAnalytics() {
   const fetchUserGrowth = async () => {
     try {
       const token = localStorage.getItem("access_token");
-      const API_URL = import.meta.env.PUBLIC_API_URL;
 
       const response = await fetch(`${API_URL}/admin/analytics/user-growth`, {
         headers: {
