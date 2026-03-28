@@ -26,7 +26,7 @@ ChartJS.register(
 interface QuizAttempt {
   id: number;
   user: string;
-  quiz?: string; // optional if backend doesn't send it
+  quiz?: string;
   date: string;
   score: number;
   risk: string;
@@ -175,7 +175,7 @@ export default function AdminQuizAnalytics() {
   };
 
   const riskDistributionData = {
-    labels: ["Low Risk", "Moderate", "High Risk"],
+    labels: ["Low ", "Moderate", "High"],
     datasets: [
       {
         data: [riskCounts.Low, riskCounts.Moderate, riskCounts.High],

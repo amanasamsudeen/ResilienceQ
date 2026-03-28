@@ -141,7 +141,7 @@ export default function AIRecommendationModal({
             AI Resilience Insights
           </Typography>
           <Typography className="text-center text-blue-50 mt-2 opacity-90 font-medium">
-            Personalized guidance powered by Gemini Flash
+            Personalized guidance for you
           </Typography>
         </div>
 

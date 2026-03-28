@@ -12,12 +12,12 @@ export default function ProfileDashboard() {
       <Navbar />
       <UserDetailsCard />
 
-      <QuizHistoryTable />
       <div className="grid md:grid-cols-2 gap-6">
         {/* <ResilienceTrendChart /> */}
         <AICoachPanel />
         <AIRecommendationPreview />
       </div>
+      <QuizHistoryTable />
       {/* <div className="flex justify-end">
         <DownloadReportButton />
       </div> */}

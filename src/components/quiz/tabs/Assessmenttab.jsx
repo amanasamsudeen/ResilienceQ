@@ -88,6 +88,12 @@ export default function AssessmentTab({ answers, setAnswers, onFinish }) {
     }
   };
 
+  const prevPage = () => {
+    if (page > 0) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   useEffect(() => {
     if (containerRef.current) {
       containerRef.current.scrollIntoView({
@@ -123,7 +129,10 @@ export default function AssessmentTab({ answers, setAnswers, onFinish }) {
         ))}
       </div>
 
-      <div className="flex justify-end mt-8">
+      <div className="flex justify-between mt-8">
+        <Button color="gray" onClick={prevPage} disabled={page === 0}>
+          Previous
+        </Button>
         <Button color="blue" disabled={!allAnswered} onClick={nextPage}>
           {startIndex + QUESTIONS_PER_PAGE >= questions.length
             ? "Submit Assessment"
