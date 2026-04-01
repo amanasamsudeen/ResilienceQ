@@ -91,85 +91,89 @@ export default function ResultModal({ answers, excelPath, onClose }: Props) {
               Bharathiar University Resilience Scale (BURS)
             </Typography>
           </div>
-          {/* Score */}
-          {/* <div className="text-center">
+
+          <div className="text-center bg-gray-50 p-6 rounded-2xl shadow-sm">
             <Typography className="text-sm text-gray-500">
-              Total Score
+              Your Score
             </Typography>
-            <Typography variant="h2" className="font-extrabold">
+
+            <Typography
+              variant="h2"
+              className={`font-extrabold ${
+                resilienceLevel === "Low"
+                  ? "text-red-600"
+                  : resilienceLevel === "Below Average"
+                    ? "text-orange-600"
+                    : resilienceLevel === "Moderate"
+                      ? "text-yellow-600"
+                      : "text-green-600"
+              }`}
+            >
               {score}
             </Typography>
-            <Typography className="text-xs text-gray-500">
+
+            <Typography className="text-sm text-gray-500">
               out of {maxScore}
             </Typography>
-          </div> */}
-          {/* Progress Bar */}
-          {/* <div>
-            <div className="w-full h-4 rounded-full bg-gray-200 overflow-hidden">
-              <div
-                className={`h-full ${color} transition-all`}
-                style={{ width: `${progressPercent}%` }}
-              />
+          </div>
+
+          <div className="space-y-3">
+            <div className="flex h-4 rounded-full overflow-hidden">
+              <div className="w-[40%] bg-red-400" /> {/* 0–60 */}
+              <div className="w-[20%] bg-orange-400" /> {/* 60–90 */}
+              <div className="w-[20%] bg-yellow-400" /> {/* 90–120 */}
+              <div className="w-[20%] bg-green-400" /> {/* 120–150 */}
             </div>
 
-            <div className="flex justify-between text-xs text-gray-500 mt-2">
+            <div className="relative h-4">
+              <div
+                className="absolute top-0 transform -translate-x-1/2"
+                style={{ left: `${(score / maxScore) * 100}%` }}
+              >
+                <div className="w-3 h-3 bg-black rounded-full shadow" />
+              </div>
+            </div>
+
+            <div className="flex justify-between text-xs text-gray-500">
               <span>0</span>
               <span>60</span>
               <span>90</span>
               <span>120</span>
               <span>150</span>
             </div>
-          </div> */}
-          <HalfCircleGauge
-            score={score}
-            maxScore={maxScore}
-            colorClass={
-              resilienceLevel === "Low"
-                ? "text-red-700"
-                : resilienceLevel === "Below Average"
-                  ? "text-orange-700"
-                  : resilienceLevel === "Moderate"
-                    ? "text-yellow-700"
-                    : "text-green-700"
-            }
-          />
-          {/* Level */}
-          <div className="text-center -mt-4">
-            <Typography className="text-m text-gray-500 font-normal">
-              Your Resilience Level is
+          </div>
+
+          <div className="text-center">
+            <Typography className="text-sm text-gray-500">
+              Your Resilience Level
             </Typography>
+
             <Typography
-              variant="h6"
-              className={`font-semibold text-2xl ${
+              variant="h5"
+              className={`font-bold ${
                 resilienceLevel === "Low"
-                  ? "text-red-700"
+                  ? "text-red-600"
                   : resilienceLevel === "Below Average"
-                    ? "text-orange-700"
+                    ? "text-orange-600"
                     : resilienceLevel === "Moderate"
-                      ? "text-yellow-700"
-                      : "text-green-700"
+                      ? "text-yellow-600"
+                      : "text-green-600"
               }`}
             >
               {resilienceLevel}
             </Typography>
           </div>
-          {/* MOTIVATIONAL INSIGHT */}{" "}
-          <div className="bg-gray-50 p-4 rounded-xl border text-center">
-            {" "}
+
+          {/* 🔥 INSIGHT */}
+          {/* <div className="bg-gray-50 p-4 rounded-xl border text-center">
             <div className="flex items-center justify-center gap-2 mb-2">
-              {" "}
-              <Icon className="h-5 w-5 text-indigo-500" />{" "}
-              <Typography className="font-semibold">
-                {" "}
-                Your Insight{" "}
-              </Typography>{" "}
-            </div>{" "}
-            <Typography className="text-sm text-gray-600">
-              {" "}
-              {message}{" "}
-            </Typography>{" "}
-          </div>
-          {/* Actions */}
+              <Icon className="h-5 w-5 text-indigo-500" />
+              <Typography className="font-semibold">Your Insight</Typography>
+            </div>
+
+            <Typography className="text-sm text-gray-600">{message}</Typography>
+          </div> */}
+
           <div className="space-y-3">
             <Button fullWidth color="purple" onClick={() => setShowAI(true)}>
               View AI Recommendations
@@ -187,6 +191,7 @@ export default function ResultModal({ answers, excelPath, onClose }: Props) {
             >
               Download Excel Report
             </Button>
+
             <Button fullWidth variant="outlined" onClick={onClose}>
               Close
             </Button>
