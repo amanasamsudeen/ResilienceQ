@@ -62,7 +62,7 @@ export default function UserDetailsCard() {
 
   const handleUpdate = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = localStorage.getItem("access_token");
       const API_URL = import.meta.env.PUBLIC_API_URL;
 
       const res = await fetch(`${API_URL}/auth/update`, {
