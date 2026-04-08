@@ -29,12 +29,12 @@ export function FeatureSectionThree() {
               Overview
             </Typography>
 
-            <Typography className="text-gray-700">
+            {/* <Typography className="text-gray-700">
               The BURS–2014, developed by <strong>Prof. N. Annalakshmi</strong>,
               consists of 30 self-report items rated on a 5-point Likert scale.
               Scores range from 30 to 150, with higher scores indicating greater
               resilience.
-            </Typography>
+            </Typography> */}
 
             <div className="space-y-6">
               <Typography variant="h4" className="font-semibold text-gray-900">

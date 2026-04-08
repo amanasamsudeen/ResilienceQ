@@ -70,8 +70,8 @@ export default function ComplexNavbar() {
 
   const navLinks = [
     { label: "Home", href: "/#", icon: HomeIcon },
-    { label: "About Us", href: "/about", icon: InformationCircleIcon },
-    // { label: "Blogs", href: "/blogs", icon: BookOpenIcon },
+    // { label: "About Us", href: "/about", icon: InformationCircleIcon },
+    { label: "Blogs", href: "/blogs", icon: BookOpenIcon },
     { label: "FAQs", href: "/faq", icon: QuestionMarkCircleIcon },
   ];
 

@@ -9,24 +9,24 @@ const SOCIAL_MEDIA = [
 ];
 
 const COMPANY = [
-  { name: "About ResilienceQ", link: "/about" },
-  { name: "Instructions", link: "/quiz" },
-  { name: "Blogs", link: "/blogs" },
-  { name: "Quiz", link: "/quiz" },
+  { name: "Resilience Coach", link: "/profile" },
+  { name: "Home", link: "/" },
+  // { name: "Blogs", link: "/blogs" },
+  //  { name: "Quiz", link: "/quiz" },
 ];
 
 const HELP = [
   { name: "FAQs", link: "/faq" },
-  { name: "Contact Support", link: "/contact" },
+  // { name: "Contact Support", link: "/contact" },
   { name: "AI assistant", link: "/faq" },
-  { name: "Code of conduct", link: "/crisis-support" },
+  // { name: "Code of conduct", link: "/crisis-support" },
 ];
 
 const RESOURCES = [
-  { name: "BURS", link: "/about" },
-  { name: "About Author", link: "/about" },
+  // { name: "BURS", link: "/" },
+  // { name: "About Author", link: "/" },
   { name: "Blog & Articles", link: "/blog" },
-  { name: "AI Transparency", link: "/quiz" },
+  { name: "Profile", link: "/profile" },
 ];
 
 export function Footer() {

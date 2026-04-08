@@ -40,12 +40,11 @@ export function HeroPresentation() {
               color="blue-gray"
               className=" lg:pr-24 text-gray-600"
             >
-              This self-evaluation platform is developed based on the Bharathiar
-              University Resilience Scale (BURS-2014) to help you understand
-              your level of psychological resilience. It encourages reflection
-              on how you adapt to adversity, stress, uncertainty, and
-              life-changing psychological challenges while effectively coping,
-              recovering, and maintaining mental well-being.
+              This self-evaluation platform to help you understand your level of
+              psychological resilience. It encourages reflection on how you
+              adapt to adversity, stress, uncertainty, and life-changing
+              psychological challenges while effectively coping, recovering, and
+              maintaining mental well-being.
             </Typography>
 
             <div className="flex flex-wrap justify-center lg:justify-start">

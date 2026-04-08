@@ -34,15 +34,11 @@ export function HeroSectionTwo() {
 
             <Typography className="mb-6 text-lg leading-relaxed text-blue-gray-800 lg:pr-20">
               <strong>ResilienceQ</strong> is an interactive, AI-supported
-              digital self-assessment and quiz-based platform developed from the
-              scientifically validated{" "}
-              <strong>
-                Bharathiar University Resilience Scale (BURS-2014)
-              </strong>{" "}
-              by Prof.N. Annalakshmi. The platform is designed for students,
-              young adults, educators, counselors, mental-health professionals,
-              and researchers to assess individual resilience across multiple
-              psychological domains in an engaging and accessible format.
+              digital self-assessment and quiz-based platform. The platform is
+              designed for students, young adults, educators, counselors,
+              mental-health professionals, and researchers to assess individual
+              resilience across multiple psychological domains in an engaging
+              and accessible format.
             </Typography>
 
             <Typography className="mb-6 text-lg leading-relaxed text-blue-gray-700 lg:pr-20">
